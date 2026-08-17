@@ -1,0 +1,14 @@
+# Credenciales — la skill 3qs escribe META_ACCESS_TOKEN acá. Nunca commitear.
+.env
+.env.*
+!.env.example
+
+# Salidas de la skill 3qs (contienen datos de cuentas publicitarias)
+businesses.json
+campaigns.json
+adsets_*.json
+ads_*.json
+insights_*.json
+
+__pycache__/
+*.pyc
