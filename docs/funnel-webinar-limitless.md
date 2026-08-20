@@ -58,6 +58,62 @@ Es decorativa, no funcional.
 - Subheadline: *"Este **20/08** en una clase privada te voy a **REGALAR TODOS** mis sistemas con los que hice **+$220k** en mi último webinar."*
 - Sticky note: *"Todos mis SOPs, paso a paso"* · marcador `VOS`
 - **VSL** con subtítulos quemados y barra de progreso naranja.
+
+#### Guion del VSL de la landing
+
+> "Hice **264 mil dólares** en mi último webinar, hice **1.3 millones de dólares** en el último año
+> exclusivamente con webinars. Y eso es exactamente lo que te voy a mostrar este 20 de agosto en una
+> clase privada. Y es más, por si aún no me creés, voy a reiniciar la página del webinar y vas a saber
+> exactamente lo que te acabo de mostrar.
+>
+> Y no, no te muestro resultados porque esto es un VSL. Te los muestro por una oportunidad enorme en el
+> mercado que nadie está aprovechando. Toda la industria de infoproductos en español te enseña
+> prácticamente lo mismo: hacé contenido orgánico, usá citas en historias, creá más reels o corré
+> [follow-ups]. Y sinceramente esto es lo menos eficiente y lo menos apalancado para escalar tu negocio.
+>
+> Yo estuve los últimos dos años trabajando en el mercado de Estados Unidos y me di cuenta que todos los
+> que hacen millones no utilizan el contenido orgánico para vender. Lo que más hacen son **webinars**,
+> como [Brevis], **Iman Gadzhi**, [Formosi] o incluso [Jerry Isaac] y miles de personas más en ese
+> mercado. Todos usan webinars, y lo que no entiendo es por qué en este mercado casi nadie los está usando.
+>
+> Por eso este 20 de agosto te voy a dar toda la data de cómo lo hacen en Estados Unidos.
+> **Primero**, las IAs, los sistemas, los funnels que utilizan e incluso todos los software con los que
+> están trabajando a día de hoy. **Segundo**, te voy a contar cómo podés aplicar todo eso paso a paso
+> para tu creador en este mercado. Y **tercero**, te voy a explicar cómo podés replicarlo con múltiples
+> creadores para crear tus propios infoproductos.
+>
+> Va a ser una clase en vivo 100% gratuita, pero escuchame: esta es **la primera y la única vez** que voy
+> a mostrar todo esto completamente gratis. Todo lo que te voy a estar mostrando normalmente vive dentro
+> de mi producto, donde clientes me están pagando **más de 15 mil dólares** por entrar. Esta vez te lo voy
+> a mostrar gratis, pero si no estás adentro te lo perdiste.
+>
+> Y ya sé lo que estás pensando: los webinars son complicados, son un quilombo, son extremadamente
+> complejos operativamente. Pero mentira. Hoy en día con las IAs que existen, lo que antes me tomaba
+> semanas lo hago en tan solo unas horas. Lo que antes me requería un equipo de 10 personas para
+> trabajarlo lo puedo hacer completamente solo. Es mucho, mucho más simple de lo que creés, pero es que
+> nadie te lo mostró bien.
+>
+> Así que si querés dejar de depender de subir contenido orgánico constantemente, registrate
+> gratuitamente en el link acá abajo, completá tus datos y vas a poder acceder a la clase.
+> Nos vemos el 20 de agosto, te espero adentro."
+
+#### Estructura argumental del VSL
+
+| # | Beat | Cómo lo ejecuta |
+|---|---|---|
+| 1 | **Prueba primero** | Abre con las cifras ($264K en el último webinar, $1.3M en el año) antes que con el problema |
+| 2 | **Prueba en vivo** | Se ofrece a reiniciar la página del webinar en cámara para mostrar los resultados en tiempo real |
+| 3 | **Reframe de la prueba** | "No te muestro resultados porque esto es un VSL, te los muestro por la oportunidad" — desarma la lectura de fanfarronería |
+| 4 | **Enemigo común** | La industria de infoproductos en español: contenido orgánico, reels, historias — "lo menos apalancado" |
+| 5 | **Autoridad prestada** | Nombra referentes del mercado de EEUU que usan webinars (Iman Gadzhi y otros) |
+| 6 | **El gap de mercado** | En EEUU todos usan webinars, en el mercado hispano casi nadie → la oportunidad |
+| 7 | **Los 3 bullets del contenido** | IAs/sistemas/funnels/software · aplicarlo con tu creador · replicarlo con múltiples creadores |
+| 8 | **Escasez + anclaje de precio** | "Primera y única vez gratis"; lo mismo vive dentro de un producto de **+$15.000 USD** |
+| 9 | **Manejo de objeción** | "Los webinars son un quilombo" → con IA: semanas → horas, equipo de 10 → una persona |
+| 10 | **CTA** | Registro gratuito en el formulario de abajo |
+
+> **Nota de transcripción**: algunos nombres propios se transcribieron fonéticamente y quedan por
+> confirmar ([Brevis], [Formosi], [Jerry Isaac]). "Las CIAs" del audio corresponde a "las IAs".
 - Tres badges: `Jueves 20 de agosto` · `17:00 hs (ARG) — ESP 22:00 · COL 15:00 · CHI 16:00` · `100% gratis y en vivo`
 
 ### Formulario de registro
@@ -243,6 +299,8 @@ Página de gracias  →  VSL #2  →  3 pasos que en realidad son mecánicas de 
         ↓                          · grupo de WhatsApp  → canal de recordatorio (mejor show-up en LATAM)
         ↓                          · Google Calendar    → recordatorio nativo
 Webinar en vivo (jue 20/08, 17:00 ARG)  →  acá ocurre la venta
+        ↓
+Producto de backend  →  anclado en el VSL en +$15.000 USD por entrar
 ```
 
 Piezas clave de la estructura:
@@ -274,6 +332,14 @@ Hallazgos del relevamiento, por si sirven como referencia de qué mirar en una e
 - Claims de ingresos específicos (`+$100,000/mes`, `+$220,000`, `$170K/mes`) sin disclaimer de
   resultados ni política de privacidad visible, recolectando email y teléfono → expuesto a
   las políticas de Meta sobre income claims y lead collection.
+
+**Consistencia de cifras**
+- Las cifras del último webinar no coinciden entre piezas: el VSL de la landing dice **$264.000**,
+  el copy del hero y el FRAME 02 dicen **+$220.000**, y el VSL de la página de gracias dice
+  **+$220.000**. Conviene unificar antes de escalar la inversión.
+- El VSL declara **$1.3M en el último año con webinars**; la bio del FRAME 03 declara **+$2M en EEUU
+  con webinars** y **+$14M generados para clientes** en 2 años. Son ventanas temporales distintas,
+  pero el lector las lee juntas.
 
 **Conversión**
 - El formulario queda por debajo del VSL (crítico en mobile, que es casi todo el tráfico de IG).
