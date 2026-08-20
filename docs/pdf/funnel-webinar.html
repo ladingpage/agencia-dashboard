@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Anatomía de un funnel de webinar</title>
+<style>
+  @page { size: A4; margin: 17mm 15mm 20mm 15mm; }
+
+  :root {
+    --ink: #16161a;
+    --ink2: #3d3d47;
+    --muted: #74747f;
+    --line: #e2e2e8;
+    --line2: #c9c9d2;
+    --accent: #e8590c;
+    --accent-soft: #fdf1e9;
+    --danger: #b42318;
+    --danger-soft: #fdf3f2;
+    --ok: #067647;
+    --ok-soft: #f0fbf5;
+    --paper: #ffffff;
+    --sans: "Liberation Sans", "DejaVu Sans", Arial, sans-serif;
+    --mono: "Liberation Mono", "DejaVu Sans Mono", monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--sans);
+    font-size: 9.6pt;
+    line-height: 1.55;
+    color: var(--ink);
+    background: var(--paper);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* ---------- cover ---------- */
+  .cover {
+    height: 258mm;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    page-break-after: always;
+  }
+  .cover-top { border-top: 3pt solid var(--accent); padding-top: 8mm; }
+  .kicker {
+    font-size: 8pt; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--accent); font-weight: 700;
+  }
+  .cover h1 {
+    font-size: 34pt; line-height: 1.08; letter-spacing: -.02em;
+    font-weight: 700; margin-top: 6mm; max-width: 150mm;
+  }
+  .cover h1 em { font-style: normal; color: var(--accent); }
+  .cover-sub {
+    font-size: 12pt; color: var(--ink2); margin-top: 7mm;
+    max-width: 130mm; line-height: 1.45;
+  }
+  .cover-meta {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 5mm 8mm; border-top: .5pt solid var(--line2);
+    padding-top: 6mm; max-width: 130mm;
+  }
+  .cover-meta dt {
+    font-size: 7.5pt; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 1mm;
+  }
+  .cover-meta dd { font-size: 9.5pt; color: var(--ink); }
+  .cover-note {
+    background: var(--accent-soft); border-left: 2.5pt solid var(--accent);
+    padding: 5mm 6mm; font-size: 9pt; color: var(--ink2); max-width: 150mm;
+  }
+
+  /* ---------- structure ---------- */
+  section { page-break-before: always; }
+  section.cont { page-break-before: auto; }
+
+  h2 {
+    font-size: 17pt; letter-spacing: -.015em; line-height: 1.2;
+    margin-bottom: 5mm; padding-bottom: 3mm;
+    border-bottom: 1.5pt solid var(--ink);
+  }
+  h2 .num {
+    display: inline-block; color: var(--accent);
+    font-size: 11pt; vertical-align: middle;
+    margin-right: 3mm; font-weight: 700;
+    letter-spacing: .06em;
+  }
+  h3 {
+    font-size: 11.5pt; margin: 7mm 0 3mm; letter-spacing: -.01em;
+    page-break-after: avoid;
+  }
+  h4 {
+    font-size: 9.6pt; margin: 5mm 0 2mm; color: var(--accent);
+    letter-spacing: .02em; page-break-after: avoid;
+  }
+  p { margin-bottom: 3mm; }
+  p.lead { font-size: 10.5pt; color: var(--ink2); margin-bottom: 5mm; }
+  ul, ol { margin: 0 0 4mm 5mm; }
+  li { margin-bottom: 1.5mm; }
+  strong { font-weight: 700; }
+  code {
+    font-family: var(--mono); font-size: 8.4pt;
+    background: #f4f4f7; padding: .3mm 1.2mm; border-radius: 1mm;
+    word-break: normal; overflow-wrap: break-word;
+  }
+  a { color: var(--ink); text-decoration: none; }
+
+  /* ---------- tables ---------- */
+  table {
+    width: 100%; border-collapse: collapse; margin: 3mm 0 5mm;
+    font-size: 8.6pt; page-break-inside: avoid;
+  }
+  thead th {
+    text-align: left; font-size: 7.4pt; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--muted);
+    border-bottom: 1pt solid var(--ink); padding: 2mm 2.5mm 1.8mm 0;
+    vertical-align: bottom;
+  }
+  td { padding: 2.2mm 2.5mm 2.2mm 0; border-bottom: .5pt solid var(--line); vertical-align: top; }
+  tr:last-child td { border-bottom: .5pt solid var(--line2); }
+  td.k { font-weight: 700; white-space: nowrap; }
+  table.tight td, table.tight th { font-size: 8.2pt; }
+  table.split { page-break-inside: auto; }
+  table.split tr { page-break-inside: avoid; }
+
+  /* ---------- callouts ---------- */
+  .box {
+    padding: 4mm 5mm; margin: 4mm 0; font-size: 8.8pt;
+    page-break-inside: avoid; border-left: 2.5pt solid var(--line2);
+    background: #fafafc;
+  }
+  .box .box-t {
+    font-size: 7.4pt; letter-spacing: .12em; text-transform: uppercase;
+    font-weight: 700; margin-bottom: 2mm; color: var(--muted);
+  }
+  .box p:last-child, .box ul:last-child { margin-bottom: 0; }
+  .box.risk { border-left-color: var(--danger); background: var(--danger-soft); }
+  .box.risk .box-t { color: var(--danger); }
+  .box.tip { border-left-color: var(--accent); background: var(--accent-soft); }
+  .box.tip .box-t { color: var(--accent); }
+  .box.good { border-left-color: var(--ok); background: var(--ok-soft); }
+  .box.good .box-t { color: var(--ok); }
+
+  /* ---------- transcript ---------- */
+  blockquote {
+    border-left: 2.5pt solid var(--accent); background: #fbfbfd;
+    padding: 4mm 5mm; margin: 3mm 0 5mm; font-size: 8.8pt;
+    color: var(--ink2); line-height: 1.6;
+  }
+  blockquote p { margin-bottom: 2.5mm; }
+  blockquote p:last-child { margin-bottom: 0; }
+  blockquote strong { color: var(--ink); }
+
+  /* ---------- figures ---------- */
+  figure { margin: 4mm 0 6mm; page-break-inside: avoid; }
+  figure img { width: 100%; border: .5pt solid var(--line2); display: block; }
+  figcaption {
+    font-size: 7.6pt; color: var(--muted); margin-top: 2mm;
+    line-height: 1.45; border-top: .5pt solid var(--line); padding-top: 1.5mm;
+  }
+  figcaption b { color: var(--ink2); font-weight: 700; }
+  .slot {
+    border: 1pt dashed var(--line2); background: #fafafc;
+    padding: 10mm 6mm; text-align: center; color: var(--muted);
+  }
+  .slot .slot-l {
+    font-size: 7.4pt; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--accent); font-weight: 700; margin-bottom: 2.5mm;
+  }
+  .slot .slot-f { font-family: var(--mono); font-size: 8.4pt; color: var(--ink2); }
+  .slot .slot-d { font-size: 8pt; margin-top: 2.5mm; max-width: 110mm; margin-left: auto; margin-right: auto; }
+
+  /* ---------- index ---------- */
+  .toc { margin-top: 6mm; }
+  .toc-item {
+    display: flex; align-items: baseline; gap: 3mm;
+    padding: 2.4mm 0; border-bottom: .5pt solid var(--line);
+  }
+  .toc-n { font-weight: 700; color: var(--accent); width: 9mm; flex-shrink: 0; font-size: 9pt; }
+  .toc-t { font-weight: 700; }
+  .toc-d { color: var(--muted); font-size: 8.4pt; }
+
+  /* ---------- flow diagram ---------- */
+  .flow { margin: 5mm 0 6mm; page-break-inside: avoid; }
+  .flow-row { display: flex; align-items: stretch; gap: 0; }
+  .flow-step {
+    flex: 1; border: .75pt solid var(--line2); border-top: 2.5pt solid var(--accent);
+    padding: 3.5mm 3mm; background: #fff;
+  }
+  .flow-step .fs-n {
+    font-size: 7pt; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--accent); font-weight: 700;
+  }
+  .flow-step .fs-t { font-weight: 700; font-size: 9pt; margin: 1.5mm 0 1mm; }
+  .flow-step .fs-d { font-size: 7.6pt; color: var(--muted); line-height: 1.4; }
+  .flow-arrow {
+    display: flex; align-items: center; justify-content: center;
+    width: 6mm; color: var(--accent); font-size: 11pt; font-weight: 700;
+  }
+  .flow-lane {
+    margin-top: 3mm; border: .75pt dashed var(--accent);
+    background: var(--accent-soft); padding: 3mm 4mm; font-size: 8.2pt;
+  }
+  .flow-lane b { color: var(--accent); }
+
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; }
+  .rule { border: 0; border-top: .5pt solid var(--line); margin: 6mm 0; }
+  .small { font-size: 8.2pt; color: var(--muted); }
+  .nb { page-break-inside: avoid; }
+</style>
+</head>
+<body>
+
+<!-- ============ PORTADA ============ -->
+<div class="cover">
+  <div class="cover-top">
+    <div class="kicker">Relevamiento de funnel · Documento interno</div>
+    <h1>Anatomía de un <em>funnel de webinar</em></h1>
+    <div class="cover-sub">
+      El paso a paso completo de <strong>webinar.applylimitless.com</strong>: del anuncio de Instagram
+      a la clase en vivo. Estructura, copy, guiones, automatizaciones y stack — más la capa de
+      nurture por SMS que le falta.
+    </div>
+  </div>
+
+  <div class="cover-note">
+    <strong>Qué es este documento.</strong> Un desarme pieza por pieza de un funnel de webinar en
+    producción, relevado desde adentro: se hizo el recorrido completo como lead, se registró una
+    cuenta real y se siguió la secuencia hasta el día del evento. Sirve como plantilla de referencia
+    para construir o auditar un funnel equivalente.
+  </div>
+
+  <dl class="cover-meta">
+    <div><dt>Funnel relevado</dt><dd>webinar.applylimitless.com</dd></div>
+    <div><dt>Origen del tráfico</dt><dd>Instagram Ads (pago)</dd></div>
+    <div><dt>Evento</dt><dd>Jueves 20/08/2026 · 17:00 ARG</dd></div>
+    <div><dt>Ventana relevada</dt><dd>15/08 – 20/08/2026</dd></div>
+    <div><dt>Piezas documentadas</dt><dd>2 landings · 2 VSL · 4 emails · 1 grupo</dd></div>
+    <div><dt>Fecha del informe</dt><dd>20 de agosto de 2026</dd></div>
+  </dl>
+</div>
+
+<!-- ============ ÍNDICE ============ -->
+<section class="cont">
+  <h2><span class="num">00</span>Contenido</h2>
+  <p class="lead">El documento sigue el recorrido real del lead: cada sección es un paso del funnel,
+  en el orden exacto en que lo atraviesa.</p>
+
+  <div class="toc">
+    <div class="toc-item"><span class="toc-n">01</span><span><span class="toc-t">Mapa del funnel</span> — <span class="toc-d">el recorrido completo en una página</span></span></div>
+    <div class="toc-item"><span class="toc-n">02</span><span><span class="toc-t">El anuncio</span> — <span class="toc-d">tráfico pago de Instagram y su estructura de tracking</span></span></div>
+    <div class="toc-item"><span class="toc-n">03</span><span><span class="toc-t">La landing de registro</span> — <span class="toc-d">concepto visual, hero, VSL y los cuatro frames</span></span></div>
+    <div class="toc-item"><span class="toc-n">04</span><span><span class="toc-t">El formulario</span> — <span class="toc-d">captura y calificación del lead en un solo paso</span></span></div>
+    <div class="toc-item"><span class="toc-n">05</span><span><span class="toc-t">La página de gracias</span> — <span class="toc-d">el segundo VSL y los tres pasos de show-up</span></span></div>
+    <div class="toc-item"><span class="toc-n">06</span><span><span class="toc-t">El grupo de WhatsApp</span> — <span class="toc-d">canal de entrega y recordatorio por cohorte</span></span></div>
+    <div class="toc-item"><span class="toc-n">07</span><span><span class="toc-t">La secuencia de email</span> — <span class="toc-d">cuatro envíos entre el registro y el evento</span></span></div>
+    <div class="toc-item"><span class="toc-n">08</span><span><span class="toc-t">Nurture por SMS</span> — <span class="toc-d">la capa que falta: secuencia, copy y operación</span></span></div>
+    <div class="toc-item"><span class="toc-n">09</span><span><span class="toc-t">El stack</span> — <span class="toc-d">herramientas declaradas y cómo se conectan</span></span></div>
+    <div class="toc-item"><span class="toc-n">10</span><span><span class="toc-t">La economía del funnel</span> — <span class="toc-d">cifras declaradas y el producto de backend</span></span></div>
+    <div class="toc-item"><span class="toc-n">11</span><span><span class="toc-t">Puntos observados</span> — <span class="toc-d">riesgos, fricciones y oportunidades detectadas</span></span></div>
+    <div class="toc-item"><span class="toc-n">12</span><span><span class="toc-t">Checklist para replicar</span> — <span class="toc-d">el funnel reducido a una lista accionable</span></span></div>
+  </div>
+
+  <div class="box" style="margin-top:8mm">
+    <div class="box-t">Nota sobre las capturas</div>
+    <p>Todas las imágenes del documento son capturas originales del funnel, sin retoque ni
+    reconstrucción. Se incluyen tal como fueron tomadas durante el recorrido, con su interfaz,
+    su navegador y sus datos reales de sesión.</p>
+  </div>
+</section>
+
+<!-- ============ 01 MAPA ============ -->
+<section>
+  <h2><span class="num">01</span>Mapa del funnel</h2>
+  <p class="lead">Seis piezas encadenadas, cada una con un único objetivo. Ninguna pide dos cosas
+  a la vez: la landing solo busca el registro, la página de gracias solo busca la asistencia, y la
+  venta queda reservada para el vivo.</p>
+
+  <div class="flow">
+    <div class="flow-row">
+      <div class="flow-step">
+        <div class="fs-n">Paso 01</div>
+        <div class="fs-t">Anuncio IG</div>
+        <div class="fs-d">Tráfico pago con UTMs e IDs de campaña</div>
+      </div>
+      <div class="flow-arrow">›</div>
+      <div class="flow-step">
+        <div class="fs-n">Paso 02</div>
+        <div class="fs-t">Landing</div>
+        <div class="fs-d">VSL + 4 frames de argumentación</div>
+      </div>
+      <div class="flow-arrow">›</div>
+      <div class="flow-step">
+        <div class="fs-n">Paso 03</div>
+        <div class="fs-t">Formulario</div>
+        <div class="fs-d">4 campos: captura y califica</div>
+      </div>
+    </div>
+    <div class="flow-row" style="margin-top:3mm">
+      <div class="flow-step">
+        <div class="fs-n">Paso 04</div>
+        <div class="fs-t">Página de gracias</div>
+        <div class="fs-d">VSL #2 + 3 pasos de show-up</div>
+      </div>
+      <div class="flow-arrow">›</div>
+      <div class="flow-step">
+        <div class="fs-n">Paso 05</div>
+        <div class="fs-t">Email + WhatsApp</div>
+        <div class="fs-d">Secuencia de 5 días hasta el evento</div>
+      </div>
+      <div class="flow-arrow">›</div>
+      <div class="flow-step">
+        <div class="fs-n">Paso 06</div>
+        <div class="fs-t">Webinar en vivo</div>
+        <div class="fs-d">Acá ocurre la venta del backend</div>
+      </div>
+    </div>
+    <div class="flow-lane">
+      <b>Capa ausente —</b> nurture por SMS. El teléfono se captura en el formulario pero solo se usa
+      para invitar al grupo. Con la secuencia de mail cayendo en spam, es el único canal que garantiza
+      llegada. Ver sección <b>08</b>.
+    </div>
+  </div>
+
+  <h3>Las cuatro decisiones estructurales</h3>
+  <table>
+    <thead><tr><th style="width:34%">Decisión</th><th>Cómo se ejecuta y por qué</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Un objetivo por página</td><td>La landing no vende el producto, vende el registro. La página de gracias no vende nada: solo compra asistencia. La oferta aparece recién en el vivo.</td></tr>
+      <tr><td class="k">Los regalos hacen doble trabajo</td><td>Los SOPs, el software y la IA son el incentivo para registrarse (FRAME 01) y, otra vez, el incentivo para aparecer (los 4 SOPs desbloqueables de la página de gracias).</td></tr>
+      <tr><td class="k">La calificación es previa</td><td>El rango de facturación se pide en el registro, no después: el lead entra al webinar ya segmentado.</td></tr>
+      <tr><td class="k">Todo empuja al show-up</td><td>Los tres pasos de la página de gracias son, en realidad, tres mecánicas de asistencia disfrazadas de desbloqueo de regalos.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ============ 02 ANUNCIO ============ -->
+<section>
+  <h2><span class="num">02</span>El anuncio</h2>
+  <p class="lead">El punto de entrada es un anuncio pago de Instagram. Todo lo que se puede leer del
+  sistema de tracking está en la URL de destino.</p>
+
+  <h3>La URL de destino</h3>
+  <p><code>https://webinar.applylimitless.com/?fbc_id=120249731093380484&amp;h_ad_id=120249731094720484&amp;utm_medium=paid&amp;utm_source=ig&amp;utm_id=120249731091940484&amp;utm_content=120249731094720484&amp;utm_term=120249731093380484&amp;utm_campaign=120249731091940484&amp;fbclid=PAdGRleAT0M…</code></p>
+
+  <table>
+    <thead><tr><th style="width:28%">Parámetro</th><th style="width:26%">Valor</th><th>Qué representa</th></tr></thead>
+    <tbody>
+      <tr><td class="k">utm_id · utm_campaign</td><td><code>…91940484</code></td><td>ID de campaña de Meta</td></tr>
+      <tr><td class="k">utm_term · fbc_id</td><td><code>…93380484</code></td><td>ID del conjunto de anuncios</td></tr>
+      <tr><td class="k">utm_content · h_ad_id</td><td><code>…94720484</code></td><td>ID del anuncio individual</td></tr>
+      <tr><td class="k">utm_source</td><td><code>ig</code></td><td>Origen declarado</td></tr>
+      <tr><td class="k">utm_medium</td><td><code>paid</code></td><td>Medio declarado</td></tr>
+      <tr><td class="k">fbclid</td><td><code>PAdGRleAT0M…</code></td><td>Click ID de Meta; alimenta la cookie <code>_fbc</code> para atribución</td></tr>
+    </tbody>
+  </table>
+
+  <div class="box">
+    <div class="box-t">Cómo está armado</div>
+    <p>Usan la sustitución dinámica de Meta para pasar los tres niveles de la jerarquía
+    (campaña / ad set / anuncio) a la URL, y además los duplican en parámetros propios
+    (<code>fbc_id</code>, <code>h_ad_id</code>) — probablemente para leerlos desde el formulario sin
+    depender de la nomenclatura UTM.</p>
+  </div>
+
+  <div class="box risk">
+    <div class="box-t">Dos problemas heredados</div>
+    <ul>
+      <li><strong>Los UTMs llevan IDs, no nombres.</strong> Los reportes muestran
+      <code>120249731091940484</code> en lugar del nombre de la campaña: ilegible sin cruzar contra
+      el administrador de anuncios.</li>
+      <li><strong><code>utm_source=ig</code> + <code>utm_medium=paid</code> no cae en Paid Social</strong>
+      en GA4: el canal queda como <em>Unassigned</em> o <em>Paid Other</em>. La convención esperada es
+      <code>utm_source=instagram</code> y <code>utm_medium=paid_social</code>.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ 03 LANDING ============ -->
+<section>
+  <h2><span class="num">03</span>La landing de registro</h2>
+  <p class="lead">La página está montada como un board de canvas colaborativo — estilo Miro o FigJam —
+  y esa metáfora sostiene todo el diseño: fondo oscuro con grilla de puntos, sticky notes rotadas,
+  polaroids con cinta, secciones nombradas <code>FRAME 01</code> a <code>FRAME 04</code> y una
+  toolbar flotante decorativa. El concepto diferencia la página del landing de infoproducto genérico.</p>
+
+  <figure>
+    <img data-slot="01-landing-hero.png" data-caption="<b>Hero de la landing.</b> Barra de countdown sticky, nav con el board title y el CTA permanente, headline con handles de selección de canvas, y el VSL con subtítulos quemados.">
+  </figure>
+
+  <h3>Elementos persistentes</h3>
+  <table class="tight">
+    <thead><tr><th style="width:30%">Elemento</th><th>Contenido</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Nav superior</td><td>Logo <strong>LIMITLESS</strong> · <code>Board: Sistema +$2,000,000 con Webinars</code> · pill <code>● En vivo</code> · avatares de asistentes (<code>A</code> <code>L</code> <code>+9</code>) · CTA <strong>Reservar lugar</strong></td></tr>
+      <tr><td class="k">Barra de countdown</td><td><code>La clase empieza en 00D 00H 42M 37S</code> — fija en el tope, visible en todo el scroll</td></tr>
+      <tr><td class="k">Toolbar flotante</td><td>Cursor, sticky, lápiz, frame, comentario y zoom 100% — decorativa, refuerza la metáfora del board</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Hero</h3>
+  <p><strong>Headline:</strong> «Te voy a dar GRATIS todos mis <strong>SOPs, Software y IA</strong> con los que hice <strong>+$2,000,000</strong> con Webinars»</p>
+  <p><strong>Subheadline:</strong> «Este <strong>20/08</strong> en una clase privada te voy a <strong>REGALAR TODOS</strong> mis sistemas con los que hice <strong>+$220k</strong> en mi último webinar.»</p>
+  <p>Debajo, tres badges: <code>Jueves 20 de agosto</code> · <code>17:00 hs (ARG) — ESP 22:00 · COL 15:00 · CHI 16:00</code> · <code>100% gratis y en vivo</code>. La conversión de husos horarios es correcta para agosto.</p>
+
+  <h3>Guion del VSL de la landing</h3>
+  <blockquote>
+    <p>«Hice <strong>264 mil dólares</strong> en mi último webinar, hice <strong>1.3 millones de dólares</strong> en el último año exclusivamente con webinars. Y eso es exactamente lo que te voy a mostrar este 20 de agosto en una clase privada. Y es más, por si aún no me creés, voy a reiniciar la página del webinar y vas a saber exactamente lo que te acabo de mostrar.</p>
+    <p>Y no, no te muestro resultados porque esto es un VSL. Te los muestro por una oportunidad enorme en el mercado que nadie está aprovechando. Toda la industria de infoproductos en español te enseña prácticamente lo mismo: hacé contenido orgánico, usá citas en historias, creá más reels o corré follow-ups. Y sinceramente esto es lo menos eficiente y lo menos apalancado para escalar tu negocio.</p>
+    <p>Yo estuve los últimos dos años trabajando en el mercado de Estados Unidos y me di cuenta que todos los que hacen millones no utilizan el contenido orgánico para vender. Lo que más hacen son <strong>webinars</strong>, como [Brevis], <strong>Iman Gadzhi</strong>, [Formosi] o incluso [Jerry Isaac] y miles de personas más en ese mercado. Todos usan webinars, y lo que no entiendo es por qué en este mercado casi nadie los está usando.</p>
+    <p>Por eso este 20 de agosto te voy a dar toda la data de cómo lo hacen en Estados Unidos. <strong>Primero</strong>, las IAs, los sistemas, los funnels que utilizan e incluso todos los software con los que están trabajando a día de hoy. <strong>Segundo</strong>, te voy a contar cómo podés aplicar todo eso paso a paso para tu creador en este mercado. Y <strong>tercero</strong>, te voy a explicar cómo podés replicarlo con múltiples creadores para crear tus propios infoproductos.</p>
+    <p>Va a ser una clase en vivo 100% gratuita, pero escuchame: esta es <strong>la primera y la única vez</strong> que voy a mostrar todo esto completamente gratis. Todo lo que te voy a estar mostrando normalmente vive dentro de mi producto, donde clientes me están pagando <strong>más de 15 mil dólares</strong> por entrar. Esta vez te lo voy a mostrar gratis, pero si no estás adentro te lo perdiste.</p>
+    <p>Y ya sé lo que estás pensando: los webinars son complicados, son un quilombo, son extremadamente complejos operativamente. Pero mentira. Hoy en día con las IAs que existen, lo que antes me tomaba semanas lo hago en tan solo unas horas. Lo que antes me requería un equipo de 10 personas para trabajarlo lo puedo hacer completamente solo. Es mucho, mucho más simple de lo que creés, pero es que nadie te lo mostró bien.</p>
+    <p>Así que si querés dejar de depender de subir contenido orgánico constantemente, registrate gratuitamente en el link acá abajo, completá tus datos y vas a poder acceder a la clase. Nos vemos el 20 de agosto, te espero adentro.»</p>
+  </blockquote>
+  <p class="small">Nota de transcripción: algunos nombres propios se transcribieron fonéticamente y quedan por confirmar ([Brevis], [Formosi], [Jerry Isaac]).</p>
+
+  <h3>Los diez beats del VSL</h3>
+  <table class="tight split">
+    <thead><tr><th style="width:6%">#</th><th style="width:28%">Beat</th><th>Cómo lo ejecuta</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td class="k">Prueba primero</td><td>Abre con las cifras ($264K en el último webinar, $1.3M en el año) antes que con el problema</td></tr>
+      <tr><td>2</td><td class="k">Prueba en vivo</td><td>Se ofrece a reiniciar la página del webinar en cámara para mostrar los resultados en tiempo real</td></tr>
+      <tr><td>3</td><td class="k">Reframe de la prueba</td><td>«No te muestro resultados porque esto es un VSL, te los muestro por la oportunidad» — desarma la lectura de fanfarronería</td></tr>
+      <tr><td>4</td><td class="k">Enemigo común</td><td>La industria de infoproductos en español: contenido orgánico, reels, historias — «lo menos apalancado»</td></tr>
+      <tr><td>5</td><td class="k">Autoridad prestada</td><td>Nombra referentes del mercado de EEUU que usan webinars</td></tr>
+      <tr><td>6</td><td class="k">El gap de mercado</td><td>En EEUU todos usan webinars, en el mercado hispano casi nadie → la oportunidad</td></tr>
+      <tr><td>7</td><td class="k">Los tres bullets</td><td>IAs, sistemas y software · aplicarlo con tu creador · replicarlo con múltiples creadores</td></tr>
+      <tr><td>8</td><td class="k">Escasez y anclaje</td><td>«Primera y única vez gratis»; lo mismo vive dentro de un producto de <strong>+$15.000 USD</strong></td></tr>
+      <tr><td>9</td><td class="k">Manejo de objeción</td><td>«Los webinars son un quilombo» → con IA: semanas a horas, equipo de 10 a una persona</td></tr>
+      <tr><td>10</td><td class="k">CTA</td><td>Registro gratuito en el formulario de abajo</td></tr>
+    </tbody>
+  </table>
+
+  <h3>FRAME 01 · Los regalos</h3>
+  <p>Kicker <em>«todo esto te lo llevás gratis ↓»</em> → título <strong>«El sistema completo que uso todos los días»</strong>. Tres sticky cards, cada una con sello <code>GRATIS</code>:</p>
+  <table class="tight">
+    <thead><tr><th style="width:22%">Regalo</th><th>Promesa</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Mis SOPs</td><td>Los procesos exactos, paso a paso, para lanzar y escalar webinars que venden. Los mismos documentos que sigue su equipo.</td></tr>
+      <tr><td class="k">Mi software</td><td>El stack completo con el que corre todo el sistema: funnel, registro, seguimiento, ventas y métricas. Configurado y listo para copiar.</td></tr>
+      <tr><td class="k">Mi IA</td><td>Los agentes y prompts que hacen el trabajo pesado: copy, creativos, guiones y seguimiento. «Como sumar un equipo de marketing que trabaja 24/7.»</td></tr>
+    </tbody>
+  </table>
+
+  <figure>
+    <img data-slot="03-frame01-regalos.png" data-caption="<b>FRAME 01 · Los regalos.</b> Las tres sticky cards con el sello GRATIS: SOPs, software e IA.">
+  </figure>
+
+  <h3>FRAME 02 · En el entrenamiento</h3>
+  <p>Kicker <em>«tres cosas ↓»</em> → título <strong>«Lo que vas a ver en vivo»</strong>:</p>
+  <ol>
+    <li>Todas las IAs, los sistemas, el funnel y los softwares usados para hacer <strong>$220,000</strong> en el último webinar.</li>
+    <li>El paso a paso exacto para aplicarlo con tu creador.</li>
+    <li>Cómo replicarlo con múltiples creadores para hacer <strong>+$100,000/mes</strong>.</li>
+  </ol>
+  <p class="small">El avatar objetivo — growth operators y agencias que trabajan con creadores — recién queda explícito acá, no en el hero.</p>
+
+  <figure>
+    <img data-slot="04-frame02-entrenamiento.png" data-caption="<b>FRAME 02 · En el entrenamiento.</b> Los tres bullets del contenido de la clase.">
+  </figure>
+
+  <h3>FRAME 03 · Tu anfitrión</h3>
+  <p>Polaroid y bio de <strong>Naza</strong>, «Growth Operator». El argumento central del bloque:
+  los mismos $2M generados dos veces — el primero con contenido orgánico en LATAM, en casi 3 años;
+  el segundo con webinars en EEUU, en menos de 1. La conclusión que instala: el orgánico depende del
+  creador y no escala; el webinar es apalancado porque casi no depende de él.</p>
+  <table class="tight">
+    <thead><tr><th style="width:32%">Cifra declarada</th><th>Contexto</th></tr></thead>
+    <tbody>
+      <tr><td class="k">+$14,000,000</td><td>Generados para clientes en los últimos 2 años (+$10M de eso en proyectos DWY)</td></tr>
+      <tr><td class="k">+$2,000,000</td><td>En EEUU, solo con webinars</td></tr>
+      <tr><td class="k">+$2,000,000</td><td>En LATAM, solo con contenido orgánico</td></tr>
+      <tr><td class="k">$170,000/mes</td><td>Negocio llevado a esa facturación con orgánico en LATAM</td></tr>
+    </tbody>
+  </table>
+
+  <figure>
+    <img data-slot="05-frame03-anfitrion.png" data-caption="<b>FRAME 03 · Tu anfitrión.</b> Polaroid, bio completa y las tres stat cards con las cifras declaradas.">
+  </figure>
+
+  <h3>FRAME 04 · Tu lugar</h3>
+  <p>Kicker <em>«último paso ↓»</em> → título <strong>«Reservá tu lugar antes de que se llene»</strong>,
+  con sticky <code>cupos limitados</code>. Es el bloque de prueba: dos capturas de dashboards de
+  gross revenue montadas como polaroids.</p>
+  <table class="tight">
+    <thead><tr><th style="width:20%">Captura</th><th style="width:28%">Monto</th><th>Período</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Dashboard 1</td><td><code>$1,040,487.47</code></td><td>1 Sep 2024 – 30 Jun 2025</td></tr>
+      <tr><td class="k">Dashboard 2</td><td><code>$1,198,865.06</code></td><td>Jun 2025 – Jun 2026</td></tr>
+    </tbody>
+  </table>
+  <p>La suma, ≈ <strong>$2.24M</strong>, es lo que respalda el claim de <code>+$2,000,000</code> del hero.
+  Las capturas no muestran la plataforma de origen ni el titular de la cuenta.</p>
+  <p>Cierre del bloque: «Una sesión en vivo. El sistema completo de +$2,000,000 en webinars, y todos
+  mis SOPs, mi software y mi IA de regalo.» → CTA <strong>QUIERO MI LUGAR GRATIS</strong>.</p>
+
+  <figure>
+    <img data-slot="06-frame04-tu-lugar.png" data-caption="<b>FRAME 04 · Tu lugar.</b> Los dos dashboards de gross revenue en polaroid, el CTA final y la sticky de cupos limitados.">
+  </figure>
+</section>
+
+<!-- ============ 04 FORMULARIO ============ -->
+<section>
+  <h2><span class="num">04</span>El formulario</h2>
+  <p class="lead">Cuatro campos que hacen dos trabajos al mismo tiempo: capturan el lead y lo
+  segmentan por facturación antes de que entre al webinar.</p>
+
+  <p>Título: <em>«Completá tus datos y reservá tu lugar»</em></p>
+
+  <table>
+    <thead><tr><th style="width:32%">Campo</th><th style="width:24%">Tipo</th><th>Detalle</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Nombre</td><td>Texto</td><td>Placeholder «Tu nombre»</td></tr>
+      <tr><td class="k">Email</td><td>Email</td><td>Placeholder «tu@email.com»</td></tr>
+      <tr><td class="k">WhatsApp</td><td>Selector de país + teléfono</td><td>Default <code>AR Argentina +54</code>; placeholder con formato local</td></tr>
+      <tr><td class="k">¿Cuánto está facturando tu negocio por mes?</td><td>Desplegable</td><td><code>Menos de $2,500</code> · <code>$2,500 - $10,000</code> · <code>Más de $10,000</code></td></tr>
+    </tbody>
+  </table>
+
+  <p><strong>CTA:</strong> <code>RESERVÁ TU LUGAR GRATIS</code> · <strong>Microcopy:</strong>
+  «Sin costo. <strong>Los cupos son limitados.</strong> El acceso te llega por email.»</p>
+  <p>Alrededor del formulario, sticky notes decorativas refuerzan los regalos
+  (<code>REGALO #2 — Mi software completo</code>, <code>REGALO #3 — Mi IA trabajando 24/7</code>),
+  y debajo se repite el countdown en formato flip.</p>
+
+  <figure>
+    <img data-slot="02-landing-form.png" data-caption="<b>El formulario en contexto.</b> Ubicado debajo del VSL, con las sticky notes de regalos a los costados y el countdown flip inmediatamente abajo.">
+  </figure>
+
+  <figure>
+    <img data-slot="07-form-dropdown.png" data-caption="<b>El desplegable de calificación.</b> Tres rangos de facturación mensual, sin moneda declarada. Es el único campo que no sirve para contactar al lead: sirve para clasificarlo.">
+  </figure>
+
+  <div class="box tip">
+    <div class="box-t">Por qué el cuarto campo</div>
+    <p>Los tres primeros campos son de contacto; el cuarto es de inteligencia comercial. Pedirlo en
+    el registro — y no después — permite que el equipo llegue al día del webinar con la audiencia ya
+    segmentada, y que el seguimiento posterior priorice por capacidad de compra en vez de por orden
+    de llegada.</p>
+  </div>
+
+  <div class="box risk">
+    <div class="box-t">Dos costos que paga ese campo</div>
+    <ul>
+      <li><strong>No declara moneda.</strong> Los rangos aparecen como <code>$2,500</code> sin aclarar
+      USD: un lead argentino puede leerlos en pesos y elegir cualquier opción, contaminando los tres
+      segmentos.</li>
+      <li><strong>El techo es bajo.</strong> <code>Más de $10,000</code> agrupa al que factura $11K con
+      el que factura $150K — exactamente el lead que compra el ticket alto. Se pierde la señal más
+      valiosa del formulario.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ 05 GRACIAS ============ -->
+<section>
+  <h2><span class="num">05</span>La página de gracias</h2>
+  <p class="lead">Es la pieza mejor resuelta del funnel. No vende nada: convierte el momento de mayor
+  intención del lead — el segundo después de registrarse — en tres acciones que determinan si va a
+  aparecer el día del evento.</p>
+
+  <h3>Hero</h3>
+  <p>Pill <code>● REGISTRO CONFIRMADO</code> → headline <strong>«Listo. Tu lugar está reservado —
+  Pero tengo 4 REGALOS para vos»</strong>.</p>
+  <p>Instrucción: «<strong>Antes de cerrar esta página</strong>, mirá el video. Hay <strong>4 SOPs de
+  regalo</strong> para vos si completás los 3 pasos de abajo. Te toma 2 minutos.»</p>
+  <p>El segundo VSL aparece rodeado por cuatro sticky notes con el preview de cada SOP. Se repiten
+  los badges de fecha, hora y gratuidad, pero <strong>no se repite el countdown</strong>.</p>
+
+  <figure>
+    <img data-slot="08-gracias-hero.png" data-caption="<b>Hero de la página de gracias.</b> El segundo VSL rodeado por los previews de los cuatro SOPs, con el pill de registro confirmado arriba.">
+  </figure>
+
+  <h3>Guion del VSL de la página de gracias</h3>
+  <blockquote>
+    <p>«Bien, pará. No cierres todavía esta slide, porque tenemos cuatro regalos para darte. Si completás los siguientes tres pasos en los próximos dos minutos, [te vamos a dar] cuatro SOPs para que puedas tener resultados incluso antes de venir a la clase.</p>
+    <p>El primero es el SOP con el que logramos hacer <strong>más de mil piezas por semana</strong> con cada uno de nuestros clientes. El segundo SOP es con el que <strong>recuperamos y logramos agendar a todos los leads en nuestro panel</strong> sin importar dónde se hayan perdido. El tercer SOP nos permite lograr un <strong>80% de show up rate</strong> sin importar de dónde haya venido la llamada. Y el cuarto SOP es la <strong>estrategia de anuncios con la que llenamos absolutamente todos nuestros webinars</strong>.</p>
+    <p>Ahora sí, para acceder a estos cuatro SOPs hay que seguir simplemente tres pasos.</p>
+    <p><strong>Primer paso</strong>: tenés que entrar a tu mail y te va a llegar un email con un asunto de un regalo. Tenés que abrirlo y responder con la palabra SOP. Si no te aparece, buscá en promociones o spam. Y si después de un rato sigue sin aparecerte, volvé a la página anterior, completá tus datos de vuelta porque probablemente escribiste mal tu email.</p>
+    <p><strong>El segundo paso</strong> es unirte al grupo de WhatsApp. Ahí no solo vamos a compartir estos SOPs sino que vamos a dar muchas más herramientas, sistemas, incluso webinars precisos con los que hicimos más de 220 mil dólares en nuestro último lanzamiento.</p>
+    <p><strong>Y por último</strong> tenés que agendar esta reunión. Lo más probable es que saliendo de este video ni te acuerdes ni de la fecha ni la hora de la reunión. Y lo que va a pasar es que te vas a perder absolutamente todos los recursos que vamos a entregar. Por ende tenés que agendarte la reunión directamente en tu calendario. Lo podés hacer clickeando directamente el botón que está ahí abajo.</p>
+    <p>Y ojo, los SOPs se van a enviar <strong>solo</strong> cuando completes los tres pasos. Si no completás uno de los pasos, no se te van a enviar y no te van a llegar nunca estos recursos. Así que ya sabés: respondé el mail, unite al grupo de WhatsApp y agendá el evento. Eso es todo, con eso ya te van a llegar los SOPs, así que nada, nos vemos el 20 de agosto.»</p>
+  </blockquote>
+
+  <h3>Qué hace cada SOP</h3>
+  <p>La página solo muestra los nombres código; el contenido se explica únicamente en el video.
+  Mapeo por orden de mención:</p>
+  <table class="tight">
+    <thead><tr><th style="width:8%">#</th><th style="width:34%">Nombre en la página</th><th>Promesa declarada en el video</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td class="k">Sistema de Distribución de Contenido</td><td>Hacer <strong>+1.000 piezas por semana</strong> con cada cliente</td></tr>
+      <tr><td>2</td><td class="k">Lazarus</td><td><strong>Recuperar y agendar leads perdidos</strong> del panel, sin importar en qué punto se cayeron</td></tr>
+      <tr><td>3</td><td class="k">B-52</td><td>Sostener un <strong>80% de show up rate</strong>, venga de donde venga la llamada</td></tr>
+      <tr><td>4</td><td class="k">Black Hole</td><td>La <strong>estrategia de anuncios</strong> con la que llenan todos los webinars</td></tr>
+    </tbody>
+  </table>
+
+  <h3>FRAME 02 · Los 3 pasos</h3>
+  <p>Kicker <em>«hacé esto ahora, te toma 2 minutos ↓»</em> → título <strong>«Desbloqueá los 4 SOPs en
+  3 pasos»</strong>.</p>
+
+  <table class="tight">
+    <thead><tr><th style="width:6%">#</th><th style="width:20%">Acción</th><th style="width:38%">Copy</th><th>CTA y tratamiento</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td class="k">Respondé el mail</td><td>«Te acaba de llegar un mail nuestro, el asunto es un regalo (🎁). Abrilo y respondé con la palabra <strong>SOP</strong>. Si no aparece, buscá en promociones o spam.»</td><td><strong>Sin botón</strong> — la acción ocurre en el inbox. Tarjeta naranja con sticky <code>IMPORTANTE</code>: la más destacada de las tres.</td></tr>
+      <tr><td>2</td><td class="k">Unite al grupo</td><td>«Ahí llega el link de acceso el día del evento, más SOPs, entregables y las IAs que usamos en el negocio.»</td><td><code>Entrar al grupo de WhatsApp</code> — botón verde con el ícono nativo de la plataforma.</td></tr>
+      <tr><td>3</td><td class="k">Agendá la clase</td><td>«Sumala a tu calendario para que nada se te cruce ese día. Un click y queda bloqueada con recordatorio.»</td><td><code>+ Agregar a Google Calendar</code> — botón negro estilo Google.</td></tr>
+    </tbody>
+  </table>
+  <p>Condición al pie: <em>«Los 4 SOPs se mandan <strong>solo</strong> a quienes completan los 3 pasos ahora.»</em></p>
+
+  <figure>
+    <img data-slot="09-gracias-3pasos.png" data-caption="<b>FRAME 02 · Los 3 pasos.</b> El paso 1 domina visualmente con la sticky IMPORTANTE y es el único sin botón; los pasos 2 y 3 usan los colores nativos de WhatsApp y Google.">
+  </figure>
+
+  <div class="box good">
+    <div class="box-t">Lo que realmente hacen estos tres pasos</div>
+    <ul>
+      <li><strong>Responder el mail</strong> es una jugada de entregabilidad: una respuesta es la señal
+      de engagement más fuerte que existe para Gmail y Outlook, y mejora la bandeja de entrada de toda
+      la secuencia posterior, no solo de ese mail.</li>
+      <li><strong>El grupo de WhatsApp</strong> es el canal con mejor tasa de show-up en LATAM y el
+      lugar donde se entrega el link de acceso el día del evento.</li>
+      <li><strong>El calendario</strong> instala un recordatorio nativo en el dispositivo del lead,
+      fuera del control de cualquier filtro de spam.</li>
+    </ul>
+    <p>Los tres están enmarcados como «desbloquear regalos», no como «ayudanos a que vengas». El lead
+    percibe que gana algo por hacer lo que al negocio le conviene.</p>
+  </div>
+
+  <h3>FRAME 03 · Nos vemos ahí</h3>
+  <p>Sticky <code>no faltes</code> · kicker <em>«todo listo ↓»</em> → headline <strong>«Nos vemos el
+  jueves 20 de agosto a las 17:00 hs (ARG)»</strong>.</p>
+  <p>Subheadline: «Los 3 pasos te toman 2 minutos y los 4 SOPs quedan en tu bandeja
+  <strong>antes de la clase</strong>. Nos vemos en vivo.» → CTA final
+  <code>AGENDARLO EN MI CALENDARIO</code>.</p>
+
+  <figure>
+    <img data-slot="10-gracias-frame03.png" data-caption="<b>FRAME 03 · Nos vemos ahí.</b> El cierre de la página, con el CTA final apuntando al calendario.">
+  </figure>
+
+  <div class="box risk">
+    <div class="box-t">Tres fricciones en el orden</div>
+    <ul>
+      <li><strong>El paso más destacado es el único que saca al lead de la página.</strong> El Paso 1
+      lleva la sticky <code>IMPORTANTE</code> y no tiene botón: quien se va al inbox a buscar el mail
+      puede no volver, y se pierde justo el grupo de WhatsApp.</li>
+      <li><strong>El CTA de cierre refuerza el canal equivocado.</strong> La página termina empujando
+      el calendario, no el grupo — que es donde llega el link de acceso.</li>
+      <li><strong>Se perdió el countdown.</strong> Con el evento a menos de una hora, la página
+      comunica «nos vemos el jueves 20» como si faltaran días.</li>
+    </ul>
+  </div>
+
+  <div class="box">
+    <div class="box-t">Una decisión correcta</div>
+    <p>No hay oferta de venta ni OTO en ninguna parte de la página de gracias. En un funnel de webinar
+    la venta ocurre en el vivo: meter una oferta acá competiría con el único objetivo de la página,
+    que es la asistencia.</p>
+  </div>
+</section>
+
+<!-- ============ 06 WHATSAPP ============ -->
+<section>
+  <h2><span class="num">06</span>El grupo de WhatsApp</h2>
+  <p class="lead">El destino del Paso 2 es un link de invitación público de <code>chat.whatsapp.com</code>.
+  Es el canal operativo del lanzamiento: por ahí se entrega el acceso el día del evento.</p>
+
+  <table>
+    <thead><tr><th style="width:28%">Atributo</th><th>Detalle</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Tipo</td><td><strong>Grupo de chat</strong> — no Comunidad ni Canal</td></tr>
+      <tr><td class="k">Nombre</td><td><code>Jueves 20/08 17hs Arg - Clase privada</code></td></tr>
+      <tr><td class="k">Ícono</td><td>Logo de LIMITLESS</td></tr>
+      <tr><td class="k">Modelo</td><td><strong>Uno nuevo por cohorte</strong>: se crea un grupo por lanzamiento, no una comunidad permanente</td></tr>
+      <tr><td class="k">Contenido prometido</td><td>Link de acceso el día del evento, SOPs, entregables y las IAs del negocio</td></tr>
+    </tbody>
+  </table>
+
+  <figure>
+    <img data-slot="11-whatsapp-invite.png" data-caption="<b>La invitación al grupo.</b> El nombre del grupo lleva la fecha y la hora del evento, lo que lo convierte en un recordatorio pasivo en la lista de chats del lead.">
+  </figure>
+
+  <div class="box tip">
+    <div class="box-t">El detalle inteligente</div>
+    <p>El nombre del grupo — <code>Jueves 20/08 17hs Arg</code> — funciona como recordatorio pasivo:
+    cada vez que el lead abre WhatsApp y recorre su lista de chats, vuelve a leer la fecha y la hora
+    del evento sin que haya que mandarle nada.</p>
+  </div>
+
+  <div class="box risk">
+    <div class="box-t">Tres riesgos de usar Grupo y no Canal</div>
+    <ul>
+      <li><strong>Expone los teléfonos de todos.</strong> En un grupo los miembros se ven entre sí:
+      adentro hay leads calificados por facturación, conseguidos con tráfico pago. Cualquiera que se
+      anote — incluido un competidor — se lleva la lista.</li>
+      <li><strong>Tope de 1.024 miembros.</strong> No escala sin abrir varios grupos en paralelo.</li>
+      <li><strong>El link de invitación es público.</strong> Permite entrar sin haberse registrado
+      — leads que nunca dejan el email — y puede reenviarse fuera del funnel.</li>
+    </ul>
+    <p>Un <strong>Canal</strong> cubre el uso real (difundir acceso y recordatorios) sin ninguno de los
+    tres problemas. Una <strong>Comunidad</strong> conserva además el efecto social de «sala llena»
+    previo al evento.</p>
+  </div>
+</section>
+
+<!-- ============ 07 EMAIL ============ -->
+<section>
+  <h2><span class="num">07</span>La secuencia de email</h2>
+  <p class="lead">Cuatro envíos entre el registro y el día del evento, todos desde el mismo remitente:
+  <code>Naza Gamero &lt;naza@msg.applylimitless.com&gt;</code>. El subdominio dedicado
+  (<code>msg.</code>) es buena práctica: aísla la reputación de envío del dominio raíz.</p>
+
+  <h3>Email 1 — Confirmación de registro</h3>
+  <table class="tight">
+    <thead><tr><th style="width:26%">Campo</th><th>Valor</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Asunto</td><td>🎁 «Hay 4 SOPs esperándote 👀» — preheader: «Listo, ya estás registrad…»</td></tr>
+      <tr><td class="k">Formato</td><td>Texto plano con emojis 👉 como bullets, más bloques de imagen laterales</td></tr>
+      <tr><td class="k">Ubicación observada</td><td><strong>Carpeta de correo no deseado</strong> en Outlook/Hotmail, con aviso de borrado automático a los 26 días</td></tr>
+      <tr><td class="k">Render</td><td>Imágenes y vínculos bloqueados por el cliente hasta que el usuario los habilita</td></tr>
+    </tbody>
+  </table>
+
+  <blockquote>
+    <p>Listo, ya estás registrado a la masterclass del 20 de agosto.</p>
+    <p>Y estás a menos de 1 minuto de recibir 4 SOPs que pueden hacerte un <strong>50% extra de facturación</strong> este mes:</p>
+    <p>👉 <strong>Respondé este mail con la palabra «SOP»</strong> y te los mando al toque.</p>
+    <p>Son los mismos SOPs que usamos nosotros y que aplican nuestros clientes todos los días para escalar sus negocios a <strong>+$100k/mes</strong>.</p>
+    <p>👉 <strong>Sumate también al grupo de WhatsApp</strong><br><code>https://chat.whatsapp.com/FPy7tIYIyyIKgUWXepOcBF?mode=gi_t</code></p>
+    <p>Ahí te vamos a ir dando nuestros <strong>Agentes de Claude</strong>, <strong>Sistemas Copy/Paste (GHL, Airtable, Zappier, etc)</strong>, más SOPs y un montón de data para que apliques YA.</p>
+    <p>Nos vemos adentro.<br>Naza</p>
+  </blockquote>
+
+  <figure>
+    <img data-slot="12-email-confirmacion.png" data-caption="<b>El email de confirmación.</b> La banda superior muestra el aviso de correo no deseado de Outlook: el mail del que depende todo el Paso 1 no llegó a la bandeja principal.">
+  </figure>
+
+  <p>Notas de estructura: el mail refuerza <strong>solo 2 de los 3 pasos</strong> — el calendario no
+  aparece — y suma una promesa que no está en ninguna otra pieza del funnel:
+  <em>«50% extra de facturación este mes»</em>.</p>
+
+  <h3>La secuencia completa</h3>
+  <p>Registro hecho el sábado 15/08 para el webinar del jueves 20/08:
+  <strong>5 días de secuencia, 4 emails</strong>.</p>
+
+  <table class="tight split">
+    <thead><tr><th style="width:6%">#</th><th style="width:20%">Fecha</th><th style="width:38%">Asunto</th><th>Rol</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td class="k">Sáb 15/08 19:47</td><td>🎁 «Hay 4 SOPs esperándote 👀»</td><td>Confirmación de registro y activación del Paso 1</td></tr>
+      <tr><td>2</td><td class="k">Lun 17/08 16:01</td><td>🧠💬 «Si no me responden los CTAs, no vendo»</td><td>Contenido / nurture — hook con una objeción del avatar entre comillas</td></tr>
+      <tr><td>3</td><td class="k">Lun 17/08 20:31</td><td>«POV: tu creador dejó de subir contenido 🖼️👀»</td><td>Contenido / nurture — segundo envío el mismo día, ~4:30 hs después</td></tr>
+      <tr><td>4</td><td class="k">Mié 19/08 19:02</td><td>«Mañana te regalo TODOS mis Sistemas, IAs, Software…»</td><td>Recordatorio D-1</td></tr>
+    </tbody>
+  </table>
+
+  <figure>
+    <img data-slot="13-secuencia-emails.png" data-caption="<b>La secuencia en la bandeja.</b> Los cuatro envíos, todos etiquetados como correo no deseado. La vista está ordenada por relevancia, no cronológicamente.">
+  </figure>
+
+  <h4>Patrones de asunto</h4>
+  <ul>
+    <li><strong>Emoji al inicio</strong> en 3 de 4, para ganar atención en la lista de correos.</li>
+    <li><strong>Estilo nativo de redes</strong>: «POV:», citas entrecomilladas como hook, cero
+    estructura de asunto corporativo.</li>
+    <li><strong>El preheader continúa el asunto</strong> en lugar de repetirlo: «Hay 4 SOPs
+    esperándote» → «Listo, ya estás registrado…».</li>
+    <li>El recordatorio D-1 usa <strong>regalo y urgencia</strong>, no la fecha ni el horario.</li>
+    <li>Cadencia: D0 confirmación · D+2 dos correos de contenido · D-1 recordatorio.</li>
+  </ul>
+
+  <div class="box risk">
+    <div class="box-t">El problema que invalida la secuencia</div>
+    <p><strong>Los cuatro correos llegaron a la carpeta de correo no deseado</strong>, no solo el de
+    confirmación. Eso apunta a autenticación o reputación del subdominio de envío — SPF, DKIM, DMARC,
+    calentamiento, volumen — y no al contenido de un mail puntual.</p>
+    <p>Las consecuencias son en cadena: el Paso 1 es prácticamente inejecutable para cualquier lead con
+    cuenta de Microsoft, los 4 SOPs nunca se entregan, el recordatorio D-1 no se ve, y el lead llega al
+    día del evento sin ningún contacto efectivo salvo que haya entrado al grupo de WhatsApp.</p>
+    <p>Es exactamente el escenario que justifica la sección siguiente.</p>
+  </div>
+</section>
+
+<!-- ============ 08 SMS ============ -->
+<section>
+  <h2><span class="num">08</span>Nurture por SMS</h2>
+  <p class="lead">La capa que el funnel no tiene y que resuelve su punto más frágil. El teléfono ya se
+  captura en el formulario, pero hoy solo se usa para invitar al grupo — un canal opt-in que pierde a
+  todo el que no entra. El SMS es el único del stack que no depende de un filtro de bandeja ni de que
+  el lead acepte sumarse a nada.</p>
+
+  <h3>Por qué sumarlo</h3>
+  <table class="tight">
+    <thead><tr><th style="width:26%">Canal</th><th style="width:20%">Depende de</th><th>Punto de falla observado</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Email</td><td>Filtros de bandeja</td><td>Los 4 envíos cayeron en spam: canal efectivamente caído</td></tr>
+      <tr><td class="k">Grupo de WhatsApp</td><td>Que el lead decida entrar</td><td>Es opt-in; quien no completa el Paso 2 queda sin ningún contacto</td></tr>
+      <tr><td class="k">Calendario</td><td>Que el lead haga click</td><td>Recuerda, pero no puede entregar el link de acceso ni recuperar a nadie</td></tr>
+      <tr><td class="k">SMS</td><td>Nada más que el número</td><td><strong>Sin punto de falla equivalente</strong>: entrega directa al dispositivo</td></tr>
+    </tbody>
+  </table>
+
+  <p>En un funnel donde todo el negocio depende del show-up, el SMS es la capa de redundancia que
+  falta. No reemplaza al email ni al grupo: los respalda en los tres momentos donde perder al lead
+  cuesta más.</p>
+
+  <h3>Los tres momentos donde entra</h3>
+  <div class="flow">
+    <div class="flow-row">
+      <div class="flow-step">
+        <div class="fs-n">Momento A</div>
+        <div class="fs-t">Rescate del Paso 1</div>
+        <div class="fs-d">El mail no llegó o cayó en spam: el SMS avisa que existe y dónde buscarlo</div>
+      </div>
+      <div class="flow-arrow">›</div>
+      <div class="flow-step">
+        <div class="fs-n">Momento B</div>
+        <div class="fs-t">Show-up</div>
+        <div class="fs-d">Recordatorios D-1 y del día, y el link de acceso minutos antes</div>
+      </div>
+      <div class="flow-arrow">›</div>
+      <div class="flow-step">
+        <div class="fs-n">Momento C</div>
+        <div class="fs-t">Recuperación</div>
+        <div class="fs-d">No-shows y asistentes que no compraron, después del vivo</div>
+      </div>
+    </div>
+  </div>
+
+  <h3>Secuencia propuesta</h3>
+  <p>Ocho mensajes, anclados al momento del registro y a la hora del evento. Los tiempos asumen el
+  patrón relevado: registro varios días antes, evento un jueves a las 17:00 ARG.</p>
+
+  <table class="tight split">
+    <thead><tr><th style="width:15%">Momento</th><th style="width:22%">Objetivo</th><th>Copy sugerido</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="k">T + 2 min</td>
+        <td>Confirmar y rescatar el Paso 1</td>
+        <td>«{Nombre}, soy Naza. Quedaste anotado a la clase del jue 20/08, 17hs ARG. Te mandé un mail con 4 SOPs de regalo: si no lo ves, revisá spam. Acceso y recursos acá: {link grupo}»</td>
+      </tr>
+      <tr>
+        <td class="k">T + 25 min<br><span class="small">(si no respondió el mail ni entró al grupo)</span></td>
+        <td>Recuperar el paso incompleto</td>
+        <td>«¿Pudiste entrar al grupo? Ahí mando el link de la clase el jueves y los 4 SOPs. Si no estás adentro, no te llegan: {link grupo}»</td>
+      </tr>
+      <tr>
+        <td class="k">D-1 · 19:00</td>
+        <td>Recordatorio y anticipo</td>
+        <td>«Mañana 17hs (ARG) muestro los sistemas con los que hice +$220k en un webinar. Es la única vez que lo doy gratis. Agendalo: {link calendario}»</td>
+      </tr>
+      <tr>
+        <td class="k">D0 · − 3 h</td>
+        <td>Recordatorio del día</td>
+        <td>«Hoy 17hs. Bloqueate 90 min sin distracciones: te sirve aunque nunca hayas hecho un webinar.»</td>
+      </tr>
+      <tr>
+        <td class="k">D0 · − 15 min</td>
+        <td><strong>Entregar el acceso</strong> — el mensaje que más levanta el show-up</td>
+        <td>«Arrancamos en 15 min. Entrá acá 👉 {link sala}»</td>
+      </tr>
+      <tr>
+        <td class="k">D0 · + 7 min<br><span class="small">(si no entró a la sala)</span></td>
+        <td>Rescatar al distraído</td>
+        <td>«Ya arrancamos, recién empieza. Estoy mostrando el funnel completo: {link sala}»</td>
+      </tr>
+      <tr>
+        <td class="k">D0 · + 2 h<br><span class="small">(no-shows)</span></td>
+        <td>Replay con vencimiento</td>
+        <td>«No te vi en la clase. Te dejo la repetición 24hs y después la bajo: {link replay}»</td>
+      </tr>
+      <tr>
+        <td class="k">D+1<br><span class="small">(asistió, no compró)</span></td>
+        <td>Empujar a la oferta</td>
+        <td>«Ayer mostré el sistema completo. La puerta de {producto} cierra mañana a las 23:59: {link}»</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="box tip">
+    <div class="box-t">La regla de oro de la secuencia</div>
+    <p>El mensaje de <strong>D0 − 15 min con el link de acceso</strong> es el que justifica toda la
+    inversión en el canal. Si solo se pudiera mandar uno, es ese: llega cuando el lead todavía puede
+    reorganizar los próximos 15 minutos, y le ahorra buscar el link en un mail que quizás nunca vio.</p>
+  </div>
+
+  <h3>Reglas de copy para SMS</h3>
+  <ul>
+    <li><strong>Un solo CTA y un solo link por mensaje.</strong> El SMS no tiene jerarquía visual: dos
+    links es cero clicks.</li>
+    <li><strong>Máximo 160 caracteres.</strong> Arriba de eso el mensaje se parte en dos y se paga
+    doble.</li>
+    <li><strong>Identificarse en el primero</strong> («soy Naza»). Un número desconocido sin nombre se
+    ignora o se reporta.</li>
+    <li><strong>El nombre del lead solo en el primer mensaje.</strong> Repetirlo en cada envío suena a
+    bot.</li>
+    <li><strong>Sin acortadores genéricos</strong> (bit.ly y similares): los operadores los filtran.
+    Usar un dominio propio corto.</li>
+    <li><strong>Sin mayúsculas sostenidas ni signos de moneda repetidos</strong>: disparan los filtros
+    de spam de los operadores.</li>
+    <li><strong>Horario</strong>: nunca antes de las 9 ni después de las 21 hora local del lead. El
+    país sale del selector de país del formulario, así que el dato ya está.</li>
+    <li><strong>Escribir como una persona, no como una marca.</strong> El SMS se lee entre mensajes de
+    familiares: el registro formal desentona y se descarta.</li>
+  </ul>
+
+  <h3>SMS o WhatsApp: cuál en cada momento</h3>
+  <table class="tight">
+    <thead><tr><th style="width:22%">Criterio</th><th style="width:39%">WhatsApp (API, 1 a 1)</th><th>SMS</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Apertura en LATAM</td><td>Más alta; es el canal por defecto</td><td>Alta, pero por debajo</td></tr>
+      <tr><td class="k">Costo por mensaje</td><td>Menor</td><td>Mayor, y varía mucho por país</td></tr>
+      <tr><td class="k">Media y formato</td><td>Permite imagen, audio y botones</td><td>Solo texto</td></tr>
+      <tr><td class="k">Requisitos</td><td>Plantillas aprobadas fuera de la ventana de 24 hs</td><td>Ninguno más que el número</td></tr>
+      <tr><td class="k">Cobertura</td><td>Requiere que el lead tenga la app</td><td>Universal</td></tr>
+    </tbody>
+  </table>
+
+  <div class="box">
+    <div class="box-t">La combinación correcta</div>
+    <p><strong>WhatsApp 1 a 1 como canal principal</strong> — no el grupo: un mensaje directo se lee
+    mucho más que uno dentro de un grupo de cientos de personas — y <strong>SMS como fallback</strong>
+    en los dos momentos críticos: el link de acceso a −15 min y el rescate del no-show.</p>
+    <p>Regla operativa: si el mensaje de WhatsApp no figura entregado o leído en X minutos, se dispara
+    el SMS equivalente. Así se paga el canal caro solo cuando el barato falló.</p>
+  </div>
+
+  <div class="box tip">
+    <div class="box-t">El activo desaprovechado</div>
+    <p>Hoy el teléfono se captura pero el único uso es invitar al grupo. Un mensaje 1 a 1 al mismo
+    número, con el nombre del lead, tiene varias veces la tasa de lectura de un mensaje en un grupo de
+    500 personas — y no depende de que haya aceptado entrar.</p>
+  </div>
+
+  <h3>Consentimiento y baja</h3>
+  <ul>
+    <li>Texto explícito bajo el campo de teléfono: <em>«Al registrarte aceptás recibir recordatorios
+    de la clase por WhatsApp y SMS.»</em></li>
+    <li>Toda secuencia automatizada debe permitir la baja: <em>«Respondé BAJA para no recibir más.»</em></li>
+    <li>Guardar en el CRM el <strong>timestamp y la IP</strong> del consentimiento junto al contacto.</li>
+    <li>Para WhatsApp API: solo plantillas aprobadas fuera de la ventana de 24 horas; el primer
+    mensaje después del registro entra dentro de esa ventana solo si el lead escribió primero.</li>
+    <li>Procesar la baja en <strong>todos</strong> los canales a la vez, no solo en el que llegó.</li>
+  </ul>
+
+  <h3>Implementación sobre el stack existente</h3>
+  <p>GoHighLevel — que ya usan — trae SMS y WhatsApp nativos con workflows disparados por el registro,
+  así que no hace falta sumar herramienta. Lo que sí hace falta es que el CRM sepa qué pasó con cada
+  paso, porque toda la secuencia se ramifica sobre eso:</p>
+  <table class="tight">
+    <thead><tr><th style="width:34%">Evento a registrar</th><th>Para qué se usa</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Respondió el mail con «SOP»</td><td>Cortar el recordatorio del Paso 1 y disparar la entrega de los SOPs</td></tr>
+      <tr><td class="k">Click en «Entrar al grupo»</td><td>Cortar el mensaje T+25 min; además es el mejor predictor de show-up disponible</td></tr>
+      <tr><td class="k">Click en «Agregar a Calendar»</td><td>Ajustar la intensidad de los recordatorios</td></tr>
+      <tr><td class="k">Entró a la sala del webinar</td><td>Separar la rama de no-shows de la de asistentes</td></tr>
+      <tr><td class="k">Rango de facturación</td><td>Priorizar el seguimiento manual post-webinar</td></tr>
+    </tbody>
+  </table>
+  <p>Sin esos eventos escritos como tags en el contacto, la secuencia solo puede mandar los mismos
+  ocho mensajes a todo el mundo — que es exactamente lo que dispara las bajas.</p>
+
+  <h3>Qué medir</h3>
+  <table class="tight">
+    <thead><tr><th style="width:32%">Métrica</th><th>Lectura</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Tasa de entrega</td><td>Por debajo del 95% hay un problema de calidad de números o de operador</td></tr>
+      <tr><td class="k">CTR del link de acceso</td><td>La métrica del mensaje de −15 min; es la que se optimiza primero</td></tr>
+      <tr><td class="k">Show-up por canal</td><td>Comparar quiénes entraron habiendo recibido SMS contra los que no: justifica el costo</td></tr>
+      <tr><td class="k">Bajas por envío</td><td>Por encima de ~2% el copy o la frecuencia están mal calibrados</td></tr>
+      <tr><td class="k">Costo por asistente</td><td>Gasto en SMS dividido por asistentes incrementales, contra el CPA del anuncio</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ============ 09 STACK ============ -->
+<section>
+  <h2><span class="num">09</span>El stack</h2>
+  <p class="lead">El email de confirmación revela las herramientas con las que corre el sistema — las
+  mismas que prometen entregar dentro del grupo, como «Sistemas Copy/Paste»: plantillas clonables,
+  no formación.</p>
+
+  <table>
+    <thead><tr><th style="width:26%">Herramienta</th><th>Uso declarado</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Agentes de Claude</td><td>Automatización con IA: copy, creativos, guiones y seguimiento (según el FRAME 01 de la landing)</td></tr>
+      <tr><td class="k">GoHighLevel (GHL)</td><td>CRM, funnel, formularios, email y seguimiento — el centro operativo</td></tr>
+      <tr><td class="k">Airtable</td><td>Base de datos operativa</td></tr>
+      <tr><td class="k">Zapier</td><td>Conexión entre sistemas</td></tr>
+      <tr><td class="k">WhatsApp</td><td>Grupo por cohorte para entrega de acceso y recordatorios</td></tr>
+      <tr><td class="k">Meta Ads</td><td>Tráfico pago desde Instagram con sustitución dinámica de IDs en la URL</td></tr>
+    </tbody>
+  </table>
+
+  <div class="box">
+    <div class="box-t">Lo que implica esta combinación</div>
+    <p>GHL cubre landing, formulario, CRM, email y SMS en una sola herramienta: es lo que permite que
+    una persona sola opere el funnel completo — el argumento central del VSL («lo que antes me requería
+    un equipo de 10 personas lo puedo hacer completamente solo»). Airtable y Zapier aparecen para lo
+    que GHL no resuelve bien: bases de datos operativas y conexiones puntuales.</p>
+    <p>Nada del stack es caro ni difícil de conseguir. La barrera de entrada del sistema no está en las
+    herramientas: está en los SOPs que las hacen funcionar juntas — que es exactamente lo que venden.</p>
+  </div>
+</section>
+
+<!-- ============ 10 ECONOMÍA ============ -->
+<section>
+  <h2><span class="num">10</span>La economía del funnel</h2>
+  <p class="lead">Todas las cifras declaradas a lo largo del recorrido, con la pieza donde aparece
+  cada una. Son claims del propio funnel, no datos verificados.</p>
+
+  <table class="tight split">
+    <thead><tr><th style="width:22%">Cifra</th><th style="width:30%">Dónde aparece</th><th>Qué afirma</th></tr></thead>
+    <tbody>
+      <tr><td class="k">+$2,000,000</td><td>Hero y nav de la landing</td><td>Generado con webinars — respaldado por los dos dashboards del FRAME 04 (≈$2.24M sumados)</td></tr>
+      <tr><td class="k">$264,000</td><td>VSL de la landing</td><td>Último webinar</td></tr>
+      <tr><td class="k">+$220,000</td><td>Hero, FRAME 02 y VSL de gracias</td><td>Último webinar / último lanzamiento</td></tr>
+      <tr><td class="k">$1,300,000</td><td>VSL de la landing</td><td>Último año, exclusivamente con webinars</td></tr>
+      <tr><td class="k">+$14,000,000</td><td>FRAME 03 (bio)</td><td>Generado para clientes en 2 años</td></tr>
+      <tr><td class="k">$170,000/mes</td><td>FRAME 03 (bio)</td><td>Negocio llevado a esa facturación con orgánico en LATAM</td></tr>
+      <tr><td class="k">+$100,000/mes</td><td>FRAME 02 y email 1</td><td>Resultado proyectado para el alumno / clientes actuales</td></tr>
+      <tr><td class="k">50% extra</td><td>Email 1</td><td>Aumento de facturación en el mes por aplicar los SOPs</td></tr>
+      <tr><td class="k">+$15,000</td><td>VSL de la landing</td><td><strong>Precio del producto de backend</strong> donde vive el contenido de la clase</td></tr>
+    </tbody>
+  </table>
+
+  <div class="box tip">
+    <div class="box-t">La estructura económica en una línea</div>
+    <p>Tráfico pago de Instagram → webinar gratuito → producto de <strong>+$15.000 USD</strong>. El
+    webinar no es el producto: es el mecanismo de venta de un ticket alto, y por eso todo el funnel
+    está optimizado para la asistencia y no para el volumen de registros.</p>
+  </div>
+
+  <div class="box risk">
+    <div class="box-t">Inconsistencias entre piezas</div>
+    <ul>
+      <li>El último webinar aparece como <strong>$264.000</strong> en el VSL de la landing y como
+      <strong>+$220.000</strong> en el hero, el FRAME 02 y el VSL de gracias.</li>
+      <li>El VSL declara <strong>$1.3M en el último año</strong> con webinars; la bio declara
+      <strong>+$2M en EEUU</strong> con webinars. Son ventanas temporales distintas, pero el lead las
+      lee en la misma sesión.</li>
+      <li><strong>Ninguna cifra aclara la moneda</strong> de forma consistente, incluidos los rangos
+      del formulario de calificación.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ 11 OBSERVADOS ============ -->
+<section>
+  <h2><span class="num">11</span>Puntos observados</h2>
+  <p class="lead">Lo que surgió del recorrido completo, ordenado por impacto. Sirve tanto para auditar
+  este funnel como para no repetir lo mismo al construir uno equivalente.</p>
+
+  <h3>Riesgo alto</h3>
+  <table class="tight">
+    <thead><tr><th style="width:30%">Punto</th><th>Detalle</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Toda la secuencia de email en spam</td><td>Los 4 correos en la carpeta de no deseado de Outlook. Se cae el Paso 1, la entrega de los SOPs y el recordatorio D-1. Es un problema de autenticación o reputación del subdominio, no de un mail puntual.</td></tr>
+      <tr><td class="k">Anuncios activos con el evento encima</td><td>El countdown marcaba 42 minutos con el tráfico pago todavía corriendo. Sin fallback evergreen, el clic posterior al inicio cae en una página vencida.</td></tr>
+      <tr><td class="k">Claims de ingresos sin disclaimer</td><td>Cifras específicas de facturación sin aviso de resultados ni política de privacidad visible, en una página que recolecta email y teléfono. Expuesto a las políticas de Meta sobre income claims y lead collection.</td></tr>
+      <tr><td class="k">Grupo de WhatsApp abierto</td><td>Expone los teléfonos de una lista de leads calificados comprados con tráfico pago, y admite entrada sin registro.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Fricción en la conversión</h3>
+  <ul>
+    <li><strong>El formulario queda debajo del VSL</strong>, crítico en mobile — que es casi todo el tráfico de Instagram.</li>
+    <li><strong>Cuatro campos para un registro gratuito</strong>, incluido un desplegable de calificación.</li>
+    <li><strong>El desplegable no declara moneda</strong> y su techo agrupa perfiles con capacidad de compra muy distinta.</li>
+    <li><strong>Se pide WhatsApp pero el microcopy solo promete email</strong>: el campo no está justificado donde se pide.</li>
+    <li><strong>La prueba más fuerte está al final.</strong> Los dashboards de revenue viven en el FRAME 04, después de todo el scroll.</li>
+    <li><strong>El hero no dice para quién es.</strong> El avatar recién aparece en el FRAME 02.</li>
+    <li><strong>Prueba exclusivamente propia</strong>: no hay testimonios ni resultados de alumnos o clientes.</li>
+    <li><strong>Tres capas de escasez</strong> — countdown, «cupos limitados» y «antes de que se llene» — que se acumulan junto a una prueba que no necesitaba adorno.</li>
+  </ul>
+
+  <h3>Página de gracias</h3>
+  <ul>
+    <li><strong>El paso más destacado es el único sin botón</strong> y el único que saca al lead de la página.</li>
+    <li><strong>El CTA de cierre refuerza el calendario</strong>, no el grupo, que es donde llega el acceso.</li>
+    <li><strong>Sin countdown</strong>: el mismo día del evento la página comunica como si faltaran días.</li>
+    <li><strong>«Te toma 2 minutos» subestima los tres pasos</strong>, y quien abandona a la mitad se queda sin nada.</li>
+    <li><strong>Condicionar la entrega a los 3 pasos</strong> deja sin premio a quien completa dos: mejor entregar a todos y reservar un extra para los que completan todo.</li>
+    <li><strong>El Paso 1 exige un remitente que acepte respuestas</strong> y un proceso — idealmente automático — que lea la keyword «SOP».</li>
+  </ul>
+
+  <h3>Tracking</h3>
+  <ul>
+    <li><code>utm_source=ig</code> + <code>utm_medium=paid</code> no clasifica como Paid Social en GA4.</li>
+    <li>Los UTMs llevan IDs en lugar de nombres: los reportes quedan ilegibles sin cruzar contra Meta.</li>
+    <li><strong>Sin verificar</strong> — requiere acceso al sistema: persistencia de <code>fbclid</code>,
+    <code>_fbc</code> y <code>_fbp</code> en campos ocultos del formulario; evento <code>Lead</code>
+    por pixel y CAPI con <code>event_id</code> compartido; UTMs conservados en la URL de gracias; y
+    evento custom en el click de «Entrar al grupo de WhatsApp».</li>
+  </ul>
+
+  <h3>Lo que está bien resuelto</h3>
+  <table class="tight">
+    <thead><tr><th style="width:30%">Acierto</th><th>Por qué funciona</th></tr></thead>
+    <tbody>
+      <tr><td class="k">El concepto de board</td><td>Diferencia la página del landing de infoproducto genérico y refuerza la promesa de «sistema»</td></tr>
+      <tr><td class="k">Responder el mail como Paso 1</td><td>La señal de engagement más fuerte para los proveedores de correo; mejora toda la secuencia posterior</td></tr>
+      <tr><td class="k">Los tres pasos enmarcados como regalo</td><td>El lead percibe que gana algo por hacer justo lo que al negocio le conviene</td></tr>
+      <tr><td class="k">Grupo nombrado con fecha y hora</td><td>Recordatorio pasivo en la lista de chats, sin costo de envío</td></tr>
+      <tr><td class="k">Botones con colores nativos</td><td>Verde WhatsApp y negro Google se reconocen al instante y levantan el CTR</td></tr>
+      <tr><td class="k">Sin OTO en la página de gracias</td><td>Nada compite con el único objetivo de esa página: la asistencia</td></tr>
+      <tr><td class="k">Husos horarios convertidos</td><td>ARG, ESP, COL y CHI resueltos en el hero, sin que el lead tenga que calcular</td></tr>
+      <tr><td class="k">Recuperación de email mal tipeado</td><td>El VSL manda a re-registrarse si el mail no llega: rescata leads que se perderían del todo</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ============ 12 CHECKLIST ============ -->
+<section>
+  <h2><span class="num">12</span>Checklist para replicar</h2>
+  <p class="lead">El funnel reducido a lo accionable. Cada punto es una decisión que hay que tomar
+  antes de escribir una línea de copy.</p>
+
+  <h3>Antes de construir</h3>
+  <ul>
+    <li>Definir el <strong>producto de backend</strong> y su precio: el webinar existe para venderlo, y de ahí sale cuánto se puede pagar por asistente.</li>
+    <li>Definir el <strong>avatar</strong> con una frase que entre en el hero.</li>
+    <li>Reunir la <strong>prueba</strong>: capturas de resultados propios con la plataforma visible, y al menos un resultado de cliente.</li>
+    <li>Elegir la <strong>fecha y hora</strong>, y convertirla a los husos de los países que se van a targetear.</li>
+  </ul>
+
+  <h3>Landing</h3>
+  <ul>
+    <li>Headline con la promesa y la cifra; subheadline con la fecha.</li>
+    <li>Un <strong>VSL</strong> siguiendo los diez beats de la sección 03: prueba, enemigo, gap, contenido, escasez, objeción, CTA.</li>
+    <li><strong>Formulario visible en el primer viewport en mobile</strong>, o CTA sticky que baje hasta él.</li>
+    <li>Prueba de resultados <strong>arriba</strong>, no al final del scroll.</li>
+    <li>Countdown con <strong>fallback definido</strong> para cuando llegue a cero.</li>
+    <li>Privacy policy, términos y disclaimer de resultados enlazados en el pie.</li>
+  </ul>
+
+  <h3>Formulario</h3>
+  <ul>
+    <li>Nombre, email, teléfono con selector de país, y <strong>un</strong> campo de calificación.</li>
+    <li>Moneda declarada en los rangos, y un techo alto que separe al lead de ticket alto.</li>
+    <li>Opción «todavía no facturo» para no contaminar el segmento más bajo.</li>
+    <li>Consentimiento explícito de WhatsApp y SMS bajo el campo de teléfono.</li>
+    <li>Campos ocultos con <code>fbclid</code>, <code>_fbc</code>, <code>_fbp</code> y todos los UTMs.</li>
+  </ul>
+
+  <h3>Página de gracias</h3>
+  <ul>
+    <li>Segundo VSL explicando los regalos y los pasos, con justificación para cada pedido.</li>
+    <li><strong>Orden correcto</strong>: primero los pasos que se resuelven con un click en la página (grupo, calendario), último el que obliga a salir (el mail).</li>
+    <li>Countdown visible, y copy que cambie a «hoy» cuando corresponda.</li>
+    <li>Evento de conversión por <strong>pixel y CAPI con el mismo <code>event_id</code></strong>.</li>
+    <li>Evento custom en el click del grupo: es el mejor predictor de show-up.</li>
+    <li>Sin oferta de venta.</li>
+  </ul>
+
+  <h3>Canales de seguimiento</h3>
+  <ul>
+    <li><strong>Email</strong>: subdominio dedicado, con SPF, DKIM y DMARC verificados y el dominio calentado antes del lanzamiento. Probar la entrega en Gmail, Outlook y Yahoo antes de mandar tráfico.</li>
+    <li><strong>WhatsApp</strong>: Canal o Comunidad en lugar de grupo abierto, más mensajes 1 a 1 por API para los momentos críticos.</li>
+    <li><strong>SMS</strong>: la secuencia de ocho mensajes de la sección 08, con el de −15 minutos como prioridad absoluta.</li>
+    <li><strong>Calendario</strong>: link de un click con recordatorio incluido.</li>
+    <li>Todos los eventos del lead escritos como tags en el CRM, para que las secuencias puedan ramificar.</li>
+  </ul>
+
+  <h3>El día del evento</h3>
+  <ul>
+    <li>Apagar los anuncios con margen suficiente, o rotar la landing a la próxima fecha.</li>
+    <li>Mandar el link de acceso por los tres canales, escalonado.</li>
+    <li>Tener lista la rama de no-shows antes de que termine el vivo.</li>
+  </ul>
+
+  <hr class="rule">
+  <p class="small">Documento de relevamiento · 20 de agosto de 2026 · Las capturas incluidas son
+  originales del funnel, sin alteración. Las cifras citadas son declaraciones del propio material
+  promocional y no fueron verificadas de forma independiente.</p>
+</section>
+
+</body>
+</html>
