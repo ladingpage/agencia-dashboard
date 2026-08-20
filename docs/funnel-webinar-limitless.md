@@ -127,7 +127,9 @@ mi software y mi IA de regalo."* → CTA `QUIERO MI LUGAR GRATIS` + *"Registrate
 
 ## 3. Página de gracias (post-registro)
 
-Pill `● REGISTRO CONFIRMADO`.
+Usa el mismo lenguaje de "board" que la landing, con su propia numeración de frames.
+
+### Hero — pill `● REGISTRO CONFIRMADO`
 
 - Headline: *"Listo. Tu lugar está reservado — Pero tengo **4 REGALOS** para vos"*
 - Instrucción: *"**Antes de cerrar esta página**, mirá el video. Hay **4 SOPs de regalo** para vos si completás los 3 pasos de abajo. Te toma 2 minutos."*
@@ -135,17 +137,40 @@ Pill `● REGISTRO CONFIRMADO`.
   `SOP #1 Sistema de Distribución de Contenido` · `SOP #2 Lazarus` · `SOP #3 B-52` · `SOP #4 Black Hole`
 - Se repiten los badges de fecha / hora / gratis. **No se repite el countdown.**
 
-### Los 3 pasos ("Desbloqueá los 4 SOPs")
+### FRAME 02 · Los 3 pasos
 
-| Paso | Acción | Copy | CTA |
-|---|---|---|---|
-| 1 | **Respondé el mail** | "Te acaba de llegar un mail nuestro, el asunto es un regalo (🎁). Abrilo y respondé con la palabra **SOP**. Si no aparece, buscá en promociones o spam." | — (acción en el inbox) |
-| 2 | **Unite al grupo** | "Ahí llega el link de acceso el día del evento, más SOPs, entregables y las IAs que usamos en el negocio." | `→ Entrar al grupo de WhatsApp` |
-| 3 | **Agendá la clase** | "Sumala a tu calendario para que nada se te cruce ese día. Un click y queda bloqueada con recordatorio." | `+ Agregar a Google Calendar` |
+Kicker *"hacé esto ahora, te toma 2 minutos ↓"* → título **"Desbloqueá los 4 SOPs en 3 pasos"**.
+Tres sticky cards:
+
+| Paso | Acción | Copy | CTA | Tratamiento visual |
+|---|---|---|---|---|
+| 1 | **Respondé el mail** | "Te acaba de llegar un mail nuestro, el asunto es un regalo (🎁). Abrilo y respondé con la palabra **SOP**. Si no aparece, buscá en promociones o spam." | **ninguno** — la acción ocurre en el inbox | tarjeta naranja + sticky `IMPORTANTE`: es la más destacada de las tres |
+| 2 | **Unite al grupo** | "Ahí llega el link de acceso el día del evento, más SOPs, entregables y las IAs que usamos en el negocio." | `Entrar al grupo de WhatsApp` | tarjeta clara, botón **verde WhatsApp con ícono nativo** |
+| 3 | **Agendá la clase** | "Sumala a tu calendario para que nada se te cruce ese día. Un click y queda bloqueada con recordatorio." | `+ Agregar a Google Calendar` | tarjeta clara, botón **negro estilo Google** |
 
 Condición al pie: *"Los 4 SOPs se mandan **solo** a quienes completan los 3 pasos ahora."*
 
-**No hay oferta de venta ni OTO en esta página** — la venta queda reservada para el webinar en vivo.
+### FRAME 03 · Nos vemos ahí
+
+Sticky `no faltes` · kicker *"todo listo ↓"*.
+
+- Headline: *"Nos vemos el jueves 20 de agosto a las 17:00 hs (ARG)"*
+- Subheadline: *"Los 3 pasos te toman 2 minutos y los 4 SOPs quedan en tu bandeja **antes de la clase**. Nos vemos en vivo."*
+- CTA final: `AGENDARLO EN MI CALENDARIO` + microcopy *"Un click y queda guardado con recordatorio."*
+
+**No hay oferta de venta ni OTO en toda la página** — la venta queda reservada para el webinar en vivo.
+
+### Destino del Paso 2 — grupo de WhatsApp
+
+El botón lleva a un link de invitación público de `chat.whatsapp.com`:
+
+- Tipo: **grupo de chat** (no Comunidad ni Canal), con el logo de LIMITLESS como ícono.
+- Nombre: **`Jueves 20/08 17hs Arg - Clase privada`** → arman **un grupo nuevo por cohorte/lanzamiento**,
+  no una comunidad permanente. El nombre con fecha y hora funciona como recordatorio pasivo
+  cada vez que el lead ve su lista de chats.
+- La pantalla intermedia ofrece `Abrir aplicación` / `Continuar en WhatsApp Web`.
+  En mobile el deep link abre la app directo; en desktop suma un paso.
+- Uso declarado en el copy: link de acceso el día del evento, SOPs, entregables y las IAs del negocio.
 
 ---
 
@@ -166,6 +191,8 @@ Webinar en vivo (jue 20/08, 17:00 ARG)  →  acá ocurre la venta
 Piezas clave de la estructura:
 
 - **Un solo objetivo por página.** La landing solo pide el registro; la thank-you solo pide asistencia.
+- **Grupo de WhatsApp por cohorte.** Se crea uno por lanzamiento, nombrado con la fecha del evento;
+  es el canal donde se entrega el acceso y se empuja el día del webinar.
 - **Los "regalos" hacen doble trabajo**: son el incentivo del registro (SOPs / software / IA en el FRAME 01)
   y el incentivo del show-up (los 4 SOPs desbloqueables en la thank-you).
 - **La escasez está en tres capas**: countdown, "cupos limitados" y "antes de que se llene".
@@ -206,7 +233,23 @@ Hallazgos del relevamiento, por si sirven como referencia de qué mirar en una e
   que es el que realmente predice la asistencia.
 - "Te toma 2 minutos" subestima los tres pasos.
 - El Paso 1 exige que el remitente acepte respuestas y que alguien (o algo) procese la keyword `SOP`.
+- El Paso 1 es el más destacado (tarjeta naranja + sticky `IMPORTANTE`) y es **el único sin botón**:
+  el diseño empuja a salir de la página al inbox antes de los dos clicks que se resolvían ahí mismo.
+  Quien se va a buscar el mail puede no volver, y se pierde el grupo de WhatsApp.
+- El CTA de cierre del FRAME 03 es `AGENDARLO EN MI CALENDARIO`: refuerza el calendario,
+  no el grupo de WhatsApp, que es donde llega el link de acceso.
+- "Los 4 SOPs quedan en tu bandeja antes de la clase" solo se cumple si la entrega por keyword
+  está automatizada; el mismo día del evento el margen es de minutos.
 - Condicionar la entrega a los 3 pasos deja sin nada a quien completa 2.
+
+**Grupo de WhatsApp**
+- Al ser un **grupo** y no un canal, los miembros se ven los teléfonos entre sí: expone la lista de
+  leads calificados —conseguidos con tráfico pago— a cualquiera que se anote, incluido un competidor.
+- Tope de 1024 miembros por grupo: no escala sin abrir varios en paralelo.
+- El link de invitación es público: permite entrar sin haberse registrado (leads que nunca dejan el email)
+  y se puede reenviar fuera del funnel.
+- Un **Canal** cubre el uso real (difundir link de acceso y recordatorios) sin ninguno de los tres problemas;
+  una **Comunidad** conserva además el efecto social de "sala llena" previo al evento.
 
 **Tracking**
 - `utm_source=ig` + `utm_medium=paid` no cae en Paid Social en GA4 (queda en *Unassigned* / *Paid Other*).
