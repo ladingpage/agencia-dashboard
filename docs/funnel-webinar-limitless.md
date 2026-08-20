@@ -285,6 +285,58 @@ El botón lleva a un link de invitación público de `chat.whatsapp.com`:
   En mobile el deep link abre la app directo; en desktop suma un paso.
 - Uso declarado en el copy: link de acceso el día del evento, SOPs, entregables y las IAs del negocio.
 
+### Email de confirmación (destino del Paso 1)
+
+Llega automáticamente al completar el formulario.
+
+| Campo | Valor |
+|---|---|
+| Remitente | **Naza Gamero** `<naza@msg.applylimitless.com>` — subdominio dedicado de envío (`msg.`), no el dominio raíz |
+| Formato | Texto plano con emojis `👉` como bullets, más bloques de imagen laterales |
+| Ubicación observada | **Carpeta de correo no deseado en Outlook/Hotmail**, con aviso de borrado automático a los 26 días |
+| Estado de render | Imágenes y vínculos bloqueados por el cliente hasta que el usuario los habilita |
+
+Cuerpo:
+
+> Listo, ya estás registrado a la masterclass del 20 de agosto.
+>
+> Y estás a menos de 1 minuto de recibir 4 SOPs que pueden hacerte un **50% extra de facturación**
+> este mes:
+>
+> 👉 **Respondé este mail con la palabra "SOP"** y te los mando al toque.
+>
+> Son los mismos SOPs que usamos nosotros y que aplican nuestros clientes todos los días para escalar
+> sus negocios a **+$100k/mes**.
+>
+> 👉 **Sumate también al grupo de WhatsApp**
+> `https://chat.whatsapp.com/FPy7tIYIyyIKgUWXepOcBF?mode=gi_t`
+>
+> Ahí te vamos a ir dando nuestros **Agentes de Claude**, **Sistemas Copy/Paste (GHL, Airtable,
+> Zappier, etc)**, más SOPs y un montón de data para que apliques YA.
+>
+> Nos vemos adentro.
+>
+> Naza
+
+Notas de estructura:
+
+- El mail refuerza **solo 2 de los 3 pasos** (responder + WhatsApp). El calendario no aparece.
+- Introduce una promesa nueva que no está en la landing ni en los VSL: **"50% extra de facturación este mes"**.
+- Es el mismo link de invitación de WhatsApp que el botón del Paso 2.
+
+### Stack declarado
+
+Lo que el mail deja ver de las herramientas que usan (y que prometen entregar en el grupo):
+
+| Herramienta | Uso declarado |
+|---|---|
+| **Agentes de Claude** | Automatización con IA (copy, creativos, guiones, seguimiento, según el FRAME 01) |
+| **GoHighLevel (GHL)** | CRM / funnel / seguimiento |
+| **Airtable** | Base de datos operativa |
+| **Zapier** | Conexión entre sistemas |
+
+Se entregan como "Sistemas Copy/Paste", es decir plantillas clonables, no formación.
+
 ---
 
 ## 4. Lógica del funnel
@@ -334,6 +386,8 @@ Hallazgos del relevamiento, por si sirven como referencia de qué mirar en una e
   las políticas de Meta sobre income claims y lead collection.
 
 **Consistencia de cifras**
+- El mail suma dos promesas nuevas que no aparecen en ninguna otra pieza: **"50% extra de facturación
+  este mes"** y clientes escalando a **+$100k/mes**.
 - Las cifras del último webinar no coinciden entre piezas: el VSL de la landing dice **$264.000**,
   el copy del hero y el FRAME 02 dicen **+$220.000**, y el VSL de la página de gracias dice
   **+$220.000**. Conviene unificar antes de escalar la inversión.
@@ -364,6 +418,15 @@ Hallazgos del relevamiento, por si sirven como referencia de qué mirar en una e
 - "Los 4 SOPs quedan en tu bandeja antes de la clase" solo se cumple si la entrega por keyword
   está automatizada; el mismo día del evento el margen es de minutos.
 - Condicionar la entrega a los 3 pasos deja sin nada a quien completa 2.
+
+**Email de confirmación**
+- En la prueba, el mail **cayó en la carpeta de spam de Outlook/Hotmail**. Todo el mecanismo del Paso 1
+  (responder con "SOP") y la entrega de los 4 SOPs dependen de que ese mail se vea: si no llega a
+  bandeja principal, se cae la promesa entera. El copy ya anticipa el problema ("buscá en promociones
+  o spam"), lo que sugiere que es recurrente.
+- El mail incluye bloques de imagen que el cliente bloquea por defecto y que se renderizan vacíos;
+  un mail 100% texto plano suele pasar mejor los filtros en este tipo de secuencia.
+- Refuerza 2 de los 3 pasos: el calendario, que es el que más ayuda al show-up, no aparece.
 
 **Grupo de WhatsApp**
 - Al ser un **grupo** y no un canal, los miembros se ven los teléfonos entre sí: expone la lista de
