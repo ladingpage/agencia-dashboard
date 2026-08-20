@@ -137,6 +137,63 @@ Usa el mismo lenguaje de "board" que la landing, con su propia numeración de fr
   `SOP #1 Sistema de Distribución de Contenido` · `SOP #2 Lazarus` · `SOP #3 B-52` · `SOP #4 Black Hole`
 - Se repiten los badges de fecha / hora / gratis. **No se repite el countdown.**
 
+#### Guion del VSL de la página de gracias
+
+> "Bien, pará. No cierres todavía esta slide, porque tenemos cuatro regalos para darte. Si completás
+> los siguientes tres pasos en los próximos dos minutos, [te vamos a dar] cuatro SOPs para que puedas
+> tener resultados incluso antes de venir a la clase.
+>
+> El primero es el SOP con el que logramos hacer **más de mil piezas por semana** con cada uno de
+> nuestros clientes. El segundo SOP es con el que **recuperamos y logramos agendar a todos los leads
+> en nuestro panel sin importar dónde se hayan perdido**. El tercer SOP nos permite lograr un
+> **80% de show up rate** sin importar de dónde haya venido la llamada. Y el cuarto SOP es la
+> **estrategia de anuncios con la que llenamos absolutamente todos nuestros webinars**.
+>
+> Ahora sí, para acceder a estos cuatro SOPs hay que seguir simplemente tres pasos.
+>
+> **Primer paso**: tenés que entrar a tu mail y te va a llegar un email con un asunto de un regalo.
+> Tenés que abrirlo y responder con la palabra SOP. Si no te aparece, buscá en promociones o spam.
+> Y si después de un rato sigue sin aparecerte, volvé a la página anterior, completá tus datos de
+> vuelta porque probablemente escribiste mal tu email.
+>
+> **El segundo paso** es unirte al grupo de WhatsApp. Ahí no solo vamos a compartir estos SOPs sino
+> que vamos a dar muchas más herramientas, sistemas, incluso webinars precisos con los que hicimos
+> más de 220 mil dólares en nuestro último lanzamiento.
+>
+> **Y por último** tenés que agendar esta reunión. Lo más probable es que saliendo de este video ni
+> te acuerdes ni de la fecha ni la hora de la reunión. Y lo que va a pasar es que te vas a perder
+> absolutamente todos los recursos que vamos a entregar. Por ende tenés que agendarte la reunión
+> directamente en tu calendario. Lo podés hacer clickeando directamente el botón que está ahí abajo.
+>
+> Y ojo, los SOPs se van a enviar **solo** cuando completes los tres pasos. Si no completás uno de los
+> pasos, no se te van a enviar y no te van a llegar nunca estos recursos. Así que ya sabés: respondé
+> el mail, unite al grupo de WhatsApp y agendá el evento. Eso es todo, con eso ya te van a llegar los
+> SOPs, así que nada, nos vemos el 20 de agosto."
+
+#### Qué hace cada SOP
+
+La página solo muestra los nombres código; el contenido de cada uno se explica únicamente en el video.
+Mapeo por orden de mención:
+
+| SOP | Nombre en la página | Promesa declarada en el video |
+|---|---|---|
+| 1 | Sistema de Distribución de Contenido | Hacer **+1.000 piezas por semana** con cada cliente |
+| 2 | Lazarus | **Recuperar y agendar leads perdidos** del panel, sin importar en qué punto se cayeron |
+| 3 | B-52 | Sostener un **80% de show up rate**, venga de donde venga la llamada |
+| 4 | Black Hole | La **estrategia de anuncios** con la que llenan todos los webinars |
+
+#### Mecánicas que solo están en el video
+
+- **Recuperación de email mal tipeado**: si el mail no llega, mandan al usuario a volver a la landing
+  y registrarse de nuevo. Rescata al lead que se perdería por un typo. No figura en el copy de la página.
+- **Justificación explícita de cada paso**: el mail por el regalo, el grupo por los recursos extra
+  ("webinars con los que hicimos +$220.000"), y el calendario por el olvido ("saliendo de este video
+  ni te acordás de la fecha"). Cada pedido viene con su razón.
+- **La condición de los 3 pasos se repite dos veces** en un guion de ~90 segundos, la segunda con
+  refuerzo negativo ("no te van a llegar nunca estos recursos").
+- **Framing del beneficio**: los SOPs se posicionan como "resultados **antes** de venir a la clase",
+  no como bonus del webinar.
+
 ### FRAME 02 · Los 3 pasos
 
 Kicker *"hacé esto ahora, te toma 2 minutos ↓"* → título **"Desbloqueá los 4 SOPs en 3 pasos"**.
