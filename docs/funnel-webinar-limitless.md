@@ -324,6 +324,31 @@ Notas de estructura:
 - Introduce una promesa nueva que no está en la landing ni en los VSL: **"50% extra de facturación este mes"**.
 - Es el mismo link de invitación de WhatsApp que el botón del Paso 2.
 
+### Secuencia de emails
+
+Todos salen del mismo remitente, `Naza Gamero <naza@msg.applylimitless.com>`.
+Registro hecho el sábado 15/08 para el webinar del jueves 20/08 → **5 días de secuencia, 4 emails**.
+
+| # | Fecha | Asunto | Rol en la secuencia |
+|---|---|---|---|
+| 1 | Sáb 15/08 19:47 | 🎁 *"Hay 4 SOPs esperándote 👀"* — preheader: *"Listo, ya estás registrad…"* | Confirmación de registro + activación del Paso 1 |
+| 2 | Lun 17/08 16:01 | 🧠💬 *"Si no me responden los CTAs, no vendo"* | Contenido / nurture — hook con cita textual de una objeción del avatar |
+| 3 | Lun 17/08 20:31 | *"POV: tu creador dejó de subir contenido 🖼️👀"* | Contenido / nurture — segundo envío el **mismo día**, ~4:30 hs después |
+| 4 | Mié 19/08 19:02 | *"Mañana te regalo TODOS mis Sistemas, IAs, Software…"* | Recordatorio D-1 |
+
+Patrones de asunto:
+
+- **Emoji al inicio** en 3 de 4, para ganar atención en la lista.
+- **Estilo nativo de redes**: "POV:", cita entrecomillada como hook, sin estructura de asunto corporativo.
+- **El preheader continúa el asunto** en vez de repetirlo (`"Hay 4 SOPs esperándote"` → `"Listo, ya estás registrado…"`).
+- El recordatorio D-1 usa **regalo + urgencia** ("Mañana te regalo TODOS…"), no la fecha ni el horario.
+- Cadencia observada: D0 confirmación · D+2 dos correos de contenido · D-1 recordatorio.
+
+> **Los cuatro llegaron a la carpeta de correo no deseado** de Outlook/Hotmail, no solo el de
+> confirmación. Es un problema de reputación del subdominio `msg.applylimitless.com`, no un fallo
+> puntual: con toda la secuencia en spam, el Paso 1 es prácticamente inejecutable para cualquier
+> lead con cuenta de Microsoft, y el recordatorio D-1 tampoco se ve.
+
 ### Stack declarado
 
 Lo que el mail deja ver de las herramientas que usan (y que prometen entregar en el grupo):
@@ -424,6 +449,9 @@ Hallazgos del relevamiento, por si sirven como referencia de qué mirar en una e
   (responder con "SOP") y la entrega de los 4 SOPs dependen de que ese mail se vea: si no llega a
   bandeja principal, se cae la promesa entera. El copy ya anticipa el problema ("buscá en promociones
   o spam"), lo que sugiere que es recurrente.
+- No es un caso aislado: **los cuatro correos de la secuencia** aparecen en la carpeta de no deseado.
+  Apunta a autenticación o reputación del subdominio de envío (SPF / DKIM / DMARC, calentamiento,
+  volumen) más que al contenido de un mail puntual.
 - El mail incluye bloques de imagen que el cliente bloquea por defecto y que se renderizan vacíos;
   un mail 100% texto plano suele pasar mejor los filtros en este tipo de secuencia.
 - Refuerza 2 de los 3 pasos: el calendario, que es el que más ayuda al show-up, no aparece.
