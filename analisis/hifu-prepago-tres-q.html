@@ -1,0 +1,624 @@
+<title>Auditoría Hifu PREPAGO</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+
+<style>
+  :root {
+    color-scheme: light;
+    --paper:      #f2f4f4;
+    --card:       #ffffff;
+    --card-2:     #eaeeee;
+    --ink:        #131a1b;
+    --ink-2:      #3d4b4d;
+    --muted:      #66787a;
+    --rule:       #d7dedd;
+    --rule-2:     #c2cccb;
+    --accent:     #10585f;
+    --accent-ink: #0c464c;
+    --crit:       #ab2a1e;
+    --crit-bg:    #f8e9e7;
+    --warn:       #8a5a00;
+    --warn-bg:    #f8f0df;
+    --good:       #12654a;
+    --good-bg:    #e3f0ea;
+    --s-money:    #2a78d6;
+    --s-result:   #1baf7a;
+    --viz-surface:#ffffff;
+    --shadow:     0 1px 2px rgba(19,26,27,.05), 0 8px 24px -16px rgba(19,26,27,.25);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --paper:      #0e1314;
+      --card:       #151d1e;
+      --card-2:     #1d2728;
+      --ink:        #e8eded;
+      --ink-2:      #c0cccc;
+      --muted:      #8b9c9d;
+      --rule:       #263234;
+      --rule-2:     #354446;
+      --accent:     #5cc6ca;
+      --accent-ink: #8ad9db;
+      --crit:       #f2887d;
+      --crit-bg:    #2e1b18;
+      --warn:       #dda94f;
+      --warn-bg:    #2b2317;
+      --good:       #57c194;
+      --good-bg:    #14261f;
+      --s-money:    #3987e5;
+      --s-result:   #199e70;
+      --viz-surface:#151d1e;
+      --shadow:     0 1px 2px rgba(0,0,0,.4), 0 10px 28px -18px rgba(0,0,0,.9);
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --paper:      #0e1314;
+    --card:       #151d1e;
+    --card-2:     #1d2728;
+    --ink:        #e8eded;
+    --ink-2:      #c0cccc;
+    --muted:      #8b9c9d;
+    --rule:       #263234;
+    --rule-2:     #354446;
+    --accent:     #5cc6ca;
+    --accent-ink: #8ad9db;
+    --crit:       #f2887d;
+    --crit-bg:    #2e1b18;
+    --warn:       #dda94f;
+    --warn-bg:    #2b2317;
+    --good:       #57c194;
+    --good-bg:    #14261f;
+    --s-money:    #3987e5;
+    --s-result:   #199e70;
+    --viz-surface:#151d1e;
+    --shadow:     0 1px 2px rgba(0,0,0,.4), 0 10px 28px -18px rgba(0,0,0,.9);
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Source Serif 4", Georgia, serif;
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 48px 24px 96px;
+    display: flex;
+    flex-direction: column;
+    gap: 56px;
+  }
+  h1, h2, h3, h4, .ui { font-family: Archivo, "Helvetica Neue", Arial, sans-serif; }
+  .mono { font-family: "IBM Plex Mono", ui-monospace, Menlo, monospace; font-variant-numeric: tabular-nums; }
+  p { max-width: 68ch; }
+  a { color: var(--accent-ink); }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+
+  /* ---------- header ---------- */
+  .eyebrow {
+    font-family: Archivo, sans-serif; font-size: 11px; font-weight: 600;
+    letter-spacing: .16em; text-transform: uppercase; color: var(--muted);
+  }
+  h1 {
+    font-size: clamp(38px, 6vw, 58px); font-weight: 700; letter-spacing: -.035em;
+    line-height: .98; margin-top: 10px; text-wrap: balance;
+  }
+  .sub {
+    font-size: 19px; color: var(--ink-2); margin-top: 14px; max-width: 60ch;
+  }
+  .idstrip {
+    margin-top: 26px; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+    padding: 14px 0; display: grid; gap: 10px 32px;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+  .idstrip div { display: flex; flex-direction: column; gap: 3px; }
+  .idstrip dt, .idk {
+    font-family: Archivo, sans-serif; font-size: 10px; font-weight: 600;
+    letter-spacing: .12em; text-transform: uppercase; color: var(--muted);
+  }
+  .idv { font-family: "IBM Plex Mono", monospace; font-size: 13px; color: var(--ink); font-variant-numeric: tabular-nums; }
+
+  /* ---------- verdict ---------- */
+  .verdict {
+    background: var(--card); border: 1px solid var(--rule); border-radius: 4px;
+    box-shadow: var(--shadow); padding: 30px 32px;
+    display: flex; flex-direction: column; gap: 26px;
+  }
+  .verdict-lead {
+    font-size: clamp(21px, 2.6vw, 27px); line-height: 1.32; letter-spacing: -.012em;
+    max-width: 30ch; margin: 0;
+  }
+  .verdict-lead b { font-weight: 600; color: var(--crit); }
+  .stats { display: grid; gap: 2px; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); background: var(--rule); border: 1px solid var(--rule); }
+  .stat { background: var(--card); padding: 16px 18px; display: flex; flex-direction: column; gap: 5px; }
+  .stat-k { font-family: Archivo, sans-serif; font-size: 10px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+  .stat-v { font-family: "IBM Plex Mono", monospace; font-size: 27px; font-weight: 500; letter-spacing: -.02em; font-variant-numeric: tabular-nums; line-height: 1.1; }
+  .stat-d { font-family: "IBM Plex Mono", monospace; font-size: 12px; font-variant-numeric: tabular-nums; }
+  .up { color: var(--crit); } .down { color: var(--crit); } .flat { color: var(--muted); }
+
+  /* today's split bar */
+  .today h3 { font-size: 13px; font-weight: 600; letter-spacing: -.005em; margin-bottom: 3px; }
+  .today p.note { font-size: 14px; color: var(--muted); margin: 0 0 14px; max-width: 62ch; }
+  .splitbar { display: flex; gap: 2px; height: 46px; }
+  .seg { position: relative; display: flex; align-items: center; padding: 0 12px; overflow: hidden; }
+  .seg span { font-family: "IBM Plex Mono", monospace; font-size: 12px; font-weight: 500; white-space: nowrap; }
+  .seg:first-child { border-radius: 4px 0 0 4px; } .seg:last-child { border-radius: 0 4px 4px 0; }
+  .seg-good { background: var(--good-bg); color: var(--good); box-shadow: inset 3px 0 0 var(--good); }
+  .seg-crit { background: var(--crit-bg); color: var(--crit); box-shadow: inset 3px 0 0 var(--crit); }
+  .seg-warn { background: var(--warn-bg); color: var(--warn); box-shadow: inset 3px 0 0 var(--warn); }
+  .splitkey { display: flex; flex-wrap: wrap; gap: 6px 20px; margin-top: 12px; }
+  .splitkey div { font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--ink-2); display: flex; gap: 8px; align-items: baseline; }
+  .splitkey b { font-weight: 500; }
+
+  /* ---------- Q sections ---------- */
+  .q { display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: 0 28px; }
+  @media (max-width: 720px) { .q { grid-template-columns: 1fr; gap: 0; } }
+  .qmark {
+    font-family: Archivo, sans-serif; font-weight: 700; font-size: 15px; letter-spacing: .02em;
+    color: var(--accent); border-top: 3px solid var(--accent); padding-top: 10px;
+    position: sticky; top: 24px; align-self: start;
+  }
+  @media (max-width: 720px) { .qmark { position: static; margin-bottom: 16px; } }
+  .qbody { display: flex; flex-direction: column; gap: 24px; min-width: 0; }
+  .qbody > h2 {
+    font-size: clamp(26px, 3.4vw, 34px); font-weight: 700; letter-spacing: -.03em; line-height: 1.1;
+    border-top: 3px solid var(--ink); padding-top: 10px; text-wrap: balance;
+  }
+  @media (max-width: 720px) { .qbody > h2 { border-top: none; padding-top: 0; } }
+  .qbody > p { margin: 0; color: var(--ink-2); }
+
+  /* ---------- table ---------- */
+  .tablecard { background: var(--card); border: 1px solid var(--rule); border-radius: 4px; box-shadow: var(--shadow); }
+  .tablecard > figcaption { padding: 16px 18px 0; }
+  .cap-t { font-family: Archivo, sans-serif; font-size: 14px; font-weight: 600; letter-spacing: -.01em; }
+  .cap-s { font-size: 13px; color: var(--muted); font-family: "IBM Plex Mono", monospace; margin-top: 3px; }
+  .scroll { overflow-x: auto; padding: 14px 4px 4px; }
+  table { border-collapse: collapse; width: 100%; font-family: "IBM Plex Mono", monospace; font-size: 13px; font-variant-numeric: tabular-nums; }
+  th, td { text-align: right; padding: 9px 14px; white-space: nowrap; border-bottom: 1px solid var(--rule); }
+  th:first-child, td:first-child { text-align: left; white-space: normal; min-width: 210px; }
+  thead th {
+    font-family: Archivo, sans-serif; font-size: 10px; font-weight: 600; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--rule-2);
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  .cname { font-family: Archivo, sans-serif; font-size: 13px; font-weight: 600; letter-spacing: -.005em; }
+  .cmeta { font-size: 11px; color: var(--muted); }
+  td.bad { color: var(--crit); font-weight: 500; }
+  td.ok  { color: var(--good); font-weight: 500; }
+  .pill { display: inline-block; font-family: Archivo, sans-serif; font-size: 9px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; padding: 2px 6px; border-radius: 2px; vertical-align: 1px; }
+  .pill-on  { background: var(--good-bg); color: var(--good); }
+  .pill-off { background: var(--card-2); color: var(--muted); }
+
+  /* ---------- charts ---------- */
+  .viz { background: var(--viz-surface); border: 1px solid var(--rule); border-radius: 4px; box-shadow: var(--shadow); padding: 20px 22px 22px; }
+  .viz h3 { font-size: 14px; font-weight: 600; letter-spacing: -.01em; }
+  .viz .vsub { font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--muted); margin: 3px 0 0; }
+  .legend { display: flex; gap: 18px; flex-wrap: wrap; margin: 14px 0 18px; }
+  .legend div { display: flex; align-items: center; gap: 7px; font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--ink-2); }
+  .sw { width: 11px; height: 11px; border-radius: 2px; flex: none; }
+  .rows { display: flex; flex-direction: column; gap: 16px; }
+  .row-l { font-family: Archivo, sans-serif; font-size: 12px; font-weight: 600; color: var(--ink); margin-bottom: 6px; letter-spacing: -.005em; }
+  .pair { display: flex; flex-direction: column; gap: 3px; }
+  .track { position: relative; display: flex; align-items: center; gap: 8px; }
+  .bar { height: 13px; border-radius: 0 3px 3px 0; min-width: 2px; transition: filter .12s; }
+  .bar:hover, .track:focus-visible .bar { filter: brightness(1.08); }
+  .bval { font-family: "IBM Plex Mono", monospace; font-size: 11.5px; color: var(--ink-2); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .zero { font-family: "IBM Plex Mono", monospace; font-size: 11.5px; color: var(--crit); }
+  .track { position: relative; }
+  .tip {
+    position: absolute; left: 0; bottom: calc(100% + 7px); z-index: 5;
+    background: var(--ink); color: var(--paper); font-family: "IBM Plex Mono", monospace;
+    font-size: 11.5px; padding: 5px 9px; border-radius: 3px; white-space: nowrap;
+    opacity: 0; pointer-events: none; transition: opacity .12s;
+  }
+  .track:hover .tip, .track:focus-within .tip, .track:focus-visible .tip { opacity: 1; }
+  .cprrow { display: grid; grid-template-columns: minmax(120px, 190px) minmax(0,1fr); gap: 14px; align-items: center; }
+  .refnote { font-family: "IBM Plex Mono", monospace; font-size: 11.5px; color: var(--muted); margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--rule-2); }
+
+  /* ---------- findings ---------- */
+  .findings { display: flex; flex-direction: column; gap: 2px; background: var(--rule); border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; }
+  .finding { background: var(--card); padding: 20px 22px; display: flex; flex-direction: column; gap: 9px; }
+  .fhead { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .chip { font-family: Archivo, sans-serif; font-size: 9.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; padding: 3px 7px; border-radius: 2px; flex: none; }
+  .c-crit { background: var(--crit-bg); color: var(--crit); }
+  .c-alto { background: var(--warn-bg); color: var(--warn); }
+  .c-medio { background: var(--card-2); color: var(--muted); }
+  .c-ciego { background: var(--good-bg); color: var(--good); }
+  .ftitle { font-family: Archivo, sans-serif; font-size: 17px; font-weight: 600; letter-spacing: -.018em; line-height: 1.25; }
+  .finding p { margin: 0; font-size: 16px; color: var(--ink-2); }
+  .fdata { font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 16px; }
+  .fdata span b { font-weight: 500; color: var(--ink-2); }
+
+  /* ---------- actions ---------- */
+  .when { display: flex; align-items: baseline; gap: 12px; margin-bottom: 2px; }
+  .when h3 { font-size: 13px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); }
+  .when hr { flex: 1; border: none; border-top: 1px solid var(--rule-2); }
+  .when .mono { font-size: 11.5px; color: var(--muted); }
+  .acts { display: flex; flex-direction: column; gap: 18px; margin: 14px 0 30px; }
+  .act { display: grid; grid-template-columns: 22px minmax(0,1fr); gap: 14px; }
+  .actbox { width: 13px; height: 13px; border: 1.5px solid var(--rule-2); border-radius: 2px; margin-top: 6px; }
+  .act h4 { font-size: 17px; font-weight: 600; letter-spacing: -.018em; line-height: 1.3; }
+  .act p { margin: 5px 0 0; font-size: 16px; color: var(--ink-2); }
+  .impact { font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--accent-ink); margin-top: 7px; display: block; }
+
+  .closing { background: var(--card); border: 1px solid var(--rule); border-left: 3px solid var(--accent); border-radius: 4px; padding: 24px 26px; display: flex; flex-direction: column; gap: 12px; }
+  .closing h3 { font-size: 17px; font-weight: 600; letter-spacing: -.018em; }
+  .closing p { margin: 0; font-size: 16px; color: var(--ink-2); }
+  footer { border-top: 1px solid var(--rule); padding-top: 20px; font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--muted); display: flex; flex-direction: column; gap: 6px; }
+
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">Auditoría de cuenta · Meta Ads · Método de las tres Q</div>
+    <h1>Hifu PREPAGO</h1>
+    <p class="sub">La cuenta no tiene un problema de creativos ni de precio de subasta. Tiene un problema de reparto: la mitad del presupuesto diario está apoyado sobre una audiencia de mil personas.</p>
+
+    <div class="idstrip">
+      <div><span class="idk">Cuenta</span><span class="idv">143662128609520</span></div>
+      <div><span class="idk">Portfolio</span><span class="idv">GlowMed · Ina Allievi</span></div>
+      <div><span class="idk">Período</span><span class="idv">28 jul – 26 ago 2026</span></div>
+      <div><span class="idk">Comparado con</span><span class="idv">28 jun – 27 jul 2026</span></div>
+      <div><span class="idk">Moneda</span><span class="idv">ARS</span></div>
+      <div><span class="idk">Puntuación Meta</span><span class="idv">72 / 100</span></div>
+    </div>
+  </header>
+
+  <section class="verdict">
+    <p class="verdict-lead">En 30 días se invirtieron <b>$876.468</b> y las conversaciones cayeron 11,8% contra el mes anterior. El presupuesto está repartido en partes iguales entre la línea que funciona y la que cuesta el triple.</p>
+
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-k">Inversión 30 días</span>
+        <span class="stat-v">$876.468</span>
+        <span class="stat-d flat">−2,1% vs. mes anterior</span>
+      </div>
+      <div class="stat">
+        <span class="stat-k">Conversaciones de WhatsApp</span>
+        <span class="stat-v">621</span>
+        <span class="stat-d down">−11,8% · eran 704</span>
+      </div>
+      <div class="stat">
+        <span class="stat-k">Costo por conversación</span>
+        <span class="stat-v">$1.181</span>
+        <span class="stat-d up">+5,8% · era $1.116</span>
+      </div>
+      <div class="stat">
+        <span class="stat-k">Inversión sin conversaciones</span>
+        <span class="stat-v">16,3%</span>
+        <span class="stat-d up">$142.927 · era 12,2%</span>
+      </div>
+    </div>
+
+    <div class="today">
+      <h3 class="ui">Cómo se reparten los ~$23.000 que la cuenta gasta hoy, cada día</h3>
+      <p class="note">Tres conjuntos activos. Uno de ellos consigue conversaciones a $821; otro, a $1.875 sobre una audiencia que Meta clasifica como demasiado chica; el tercero compra interacciones que nadie recoge después.</p>
+      <div class="splitbar" role="img" aria-label="Reparto del gasto diario: 43% a la línea que funciona, 43% al lookalike agotado, 13% a interacción sin salida.">
+        <div class="seg seg-good" style="flex: 43.5"><span>$10.000 · Pilar 35+</span></div>
+        <div class="seg seg-crit" style="flex: 43.5"><span>$10.000 · Lookalike</span></div>
+        <div class="seg seg-warn" style="flex: 13"><span>$3.000</span></div>
+      </div>
+      <div class="splitkey">
+        <div><b style="color:var(--good)">Rinde</b> Mujeres 35+ Pilar · $821 por conversación</div>
+        <div><b style="color:var(--crit)">No rinde</b> Lookalike Wsp Ina · $1.875 · audiencia de 1.000 personas</div>
+        <div><b style="color:var(--warn)">No mide</b> Interacción Post IG · 0 conversaciones</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Q1 ============ -->
+  <section class="q">
+    <div class="qmark">Q1<br>Qué pasó</div>
+    <div class="qbody">
+      <h2>Se gastó casi lo mismo y se trajo un 12% menos de gente</h2>
+      <p>Cinco campañas movieron dinero en los últimos 30 días. Dos de ellas concentran el 68% de la inversión y se llevan presupuestos casi idénticos —$299.009 y $297.857— con resultados que no se parecen en nada: una trajo 128 conversaciones, la otra 363.</p>
+
+      <figure class="tablecard">
+        <figcaption>
+          <div class="cap-t">Campañas con inversión · 28 jul – 26 ago 2026</div>
+          <div class="cap-s">Ordenadas por inversión · ARS</div>
+        </figcaption>
+        <div class="scroll">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Campaña</th>
+                <th scope="col">Inversión</th>
+                <th scope="col">Resultado</th>
+                <th scope="col">Costo unit.</th>
+                <th scope="col">CTR</th>
+                <th scope="col">CPM</th>
+                <th scope="col">Frec.</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="cname">Interaccion Msj Wsp | ABO | Lookalike</span> <span class="pill pill-on">Activa</span><br><span class="cmeta">Mensajes · conversaciones</span></td>
+                <td>$299.009</td><td>128 conv.</td><td class="bad">$2.336</td><td>3,00%</td><td>$12.882</td><td>2,44</td>
+              </tr>
+              <tr>
+                <td><span class="cname">INTERACCIÓN | ABO | Mensajes WhatsApp | Mujeres 35+ | Pilar</span> <span class="pill pill-on">Activa</span><br><span class="cmeta">Mensajes · conversaciones</span></td>
+                <td>$297.857</td><td>363 conv.</td><td class="ok">$821</td><td>4,62%</td><td>$10.941</td><td>1,66</td>
+              </tr>
+              <tr>
+                <td><span class="cname">LEADS | CBO | Mujeres 35+ | Pilar</span> <span class="pill pill-off">Pausada</span><br><span class="cmeta">Mensajes · conversaciones</span></td>
+                <td>$136.676</td><td>130 conv.</td><td>$1.051</td><td>4,31%</td><td>$8.231</td><td>1,78</td>
+              </tr>
+              <tr>
+                <td><span class="cname">Reels Virales</span> <span class="pill pill-on">Activa</span><br><span class="cmeta">Interacción con la publicación</span></td>
+                <td>$88.605</td><td>36.702 inter.</td><td>$2,41</td><td class="bad">0,23%</td><td>$1.168</td><td>1,60</td>
+              </tr>
+              <tr>
+                <td><span class="cname">Seguidores Instagram CBO</span> <span class="pill pill-off">Pausada</span><br><span class="cmeta">Visitas al perfil</span></td>
+                <td>$54.322</td><td>485 visitas</td><td>$112</td><td>2,81%</td><td>$3.279</td><td>1,26</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </figure>
+
+      <figure class="viz">
+        <h3 class="ui">Dónde va la plata y de dónde vienen las conversaciones</h3>
+        <p class="vsub">Participación sobre $876.468 invertidos y 621 conversaciones · 30 días</p>
+        <div class="legend">
+          <div><span class="sw" style="background: var(--s-money)"></span> Participación en la inversión</div>
+          <div><span class="sw" style="background: var(--s-result)"></span> Participación en las conversaciones</div>
+        </div>
+        <div class="rows">
+
+          <div class="pair">
+            <div class="row-l">Lookalike</div>
+            <div class="track" tabindex="0"><div class="bar" style="width: 34.1%; background: var(--s-money)"></div><span class="bval">34,1% · $299.009</span><span class="tip">Inversión $299.009 de $876.468</span></div>
+            <div class="track" tabindex="0"><div class="bar" style="width: 20.6%; background: var(--s-result)"></div><span class="bval">20,6% · 128</span><span class="tip">128 conversaciones de 621</span></div>
+          </div>
+
+          <div class="pair">
+            <div class="row-l">Mujeres 35+ Pilar</div>
+            <div class="track" tabindex="0"><div class="bar" style="width: 34.0%; background: var(--s-money)"></div><span class="bval">34,0% · $297.857</span><span class="tip">Inversión $297.857 de $876.468</span></div>
+            <div class="track" tabindex="0"><div class="bar" style="width: 58.5%; background: var(--s-result)"></div><span class="bval">58,5% · 363</span><span class="tip">363 conversaciones de 621</span></div>
+          </div>
+
+          <div class="pair">
+            <div class="row-l">LEADS CBO Pilar <span class="cmeta">(pausada)</span></div>
+            <div class="track" tabindex="0"><div class="bar" style="width: 15.6%; background: var(--s-money)"></div><span class="bval">15,6% · $136.676</span><span class="tip">Inversión $136.676 de $876.468</span></div>
+            <div class="track" tabindex="0"><div class="bar" style="width: 20.9%; background: var(--s-result)"></div><span class="bval">20,9% · 130</span><span class="tip">130 conversaciones de 621</span></div>
+          </div>
+
+          <div class="pair">
+            <div class="row-l">Reels Virales + Seguidores</div>
+            <div class="track" tabindex="0"><div class="bar" style="width: 16.3%; background: var(--s-money)"></div><span class="bval">16,3% · $142.927</span><span class="tip">Inversión $142.927 de $876.468</span></div>
+            <div class="track"><span class="zero">0% · ninguna conversación</span></div>
+          </div>
+
+        </div>
+        <p class="refnote">Las dos primeras líneas reciben prácticamente el mismo presupuesto. Una devuelve casi el triple de conversaciones que la otra.</p>
+      </figure>
+
+      <figure class="viz">
+        <h3 class="ui">Costo por conversación de WhatsApp</h3>
+        <p class="vsub">30 días · ARS · escala común hasta $2.500</p>
+        <div class="rows">
+          <div class="cprrow">
+            <div class="row-l">Mujeres 35+ Pilar</div>
+            <div class="track" tabindex="0"><div class="bar" style="width: 32.8%; background: var(--s-money)"></div><span class="bval">$821</span><span class="tip">363 conversaciones · $297.857</span></div>
+          </div>
+          <div class="cprrow">
+            <div class="row-l">LEADS CBO Pilar</div>
+            <div class="track" tabindex="0"><div class="bar" style="width: 42.1%; background: var(--s-money)"></div><span class="bval">$1.051</span><span class="tip">130 conversaciones · $136.676</span></div>
+          </div>
+          <div class="cprrow">
+            <div class="row-l">Lookalike</div>
+            <div class="track" tabindex="0"><div class="bar" style="width: 93.4%; background: var(--s-money)"></div><span class="bval">$2.336</span><span class="tip">128 conversaciones · $299.009</span></div>
+          </div>
+        </div>
+        <p class="refnote">Promedio mezclado de la cuenta: $1.181 por conversación. El lookalike lo empuja para arriba; sin esa línea, la cuenta consigue conversaciones a $881.</p>
+      </figure>
+
+      <p>Contra el mes anterior, la línea de Pilar también se encareció: de $738 a $821 por conversación, con el CPM subiendo 10,9%. Es un deterioro normal de fatiga, no una emergencia. La emergencia está en la otra línea, que ya venía cara —$2.211 el mes pasado— y volvió a empeorar.</p>
+    </div>
+  </section>
+
+  <!-- ============ Q2 ============ -->
+  <section class="q">
+    <div class="qmark">Q2<br>Por qué pasó</div>
+    <div class="qbody">
+      <h2>Nueve cosas que están mal, ordenadas por lo que cuestan</h2>
+      <p>Los primeros dos hallazgos explican casi todo el sobrecosto. El resto son riesgos que todavía no se cobraron.</p>
+
+      <div class="findings">
+
+        <div class="finding">
+          <div class="fhead"><span class="chip c-crit">Crítico</span><span class="ftitle">La audiencia activa tiene mil personas y un presupuesto de $10.000 por día</span></div>
+          <p>El conjunto <em>Lookalike | Wsp Ina</em> está entregando contra un público que Meta estima en 1.000 personas y marca explícitamente como demasiado chico. Un presupuesto de ese tamaño sobre un público así no tiene a quién mostrarle: la subasta se encarece, la frecuencia sube y el costo por conversación se dispara. No es un problema del anuncio, es un problema de tamaño de público.</p>
+          <div class="fdata">
+            <span>Conjunto <b>120248194840790178</b></span><span>Público estimado <b>1.000</b></span><span>CPM <b>$12.227</b></span><span>Costo/conv. <b>$1.875</b></span><span>Alcance 30 días <b>3.655</b></span>
+          </div>
+        </div>
+
+        <div class="finding">
+          <div class="fhead"><span class="chip c-crit">Crítico</span><span class="ftitle">Dos líneas con el mismo presupuesto y el triple de diferencia en costo</span></div>
+          <p>Lookalike y Pilar tienen $10.000 diarios cada una desde hace dos meses, aunque una consigue conversaciones a $821 y la otra a $2.336. En julio y agosto juntos, la línea lookalike consumió $599.756 y trajo 264 conversaciones. El conjunto anterior, <em>Lookalike 1% | Wsp | Mayo 26</em>, ya había gastado $225.893 a $2.538 cada una con frecuencia 2,15 antes de que lo pausaran: el problema se repitió con un conjunto nuevo en lugar de corregirse.</p>
+          <div class="fdata">
+            <span>2 meses de lookalike <b>$599.756</b></span><span>Conversaciones <b>264</b></span><span>Costo promedio <b>$2.272</b></span>
+          </div>
+        </div>
+
+        <div class="finding">
+          <div class="fhead"><span class="chip c-alto">Alto</span><span class="ftitle">Toda la cuenta cuelga de un solo anuncio</span></div>
+          <p>El anuncio <em>Post IG HIFU</em> se llevó $294.214 de los $297.857 de la campaña que funciona, y 357 de sus 363 conversaciones. No hay creativo de relevo corriendo en paralelo. Cuando ese anuncio se fatigue —la frecuencia ya está en 1,65 y va a subir apenas se escale el presupuesto— no hay nada atrás que sostenga el volumen.</p>
+          <div class="fdata">
+            <span>Concentración <b>98,8% de la inversión de la campaña</b></span><span>Formato <b>sólo posteos de Instagram</b></span>
+          </div>
+        </div>
+
+        <div class="finding">
+          <div class="fhead"><span class="chip c-alto">Alto</span><span class="ftitle">$142.927 compran métricas que no tienen salida</span></div>
+          <p>Reels Virales produjo 36.702 interacciones a $2,41 con un CTR de 0,23%, y Seguidores Instagram 485 visitas al perfil a $112. Son números baratos y verdaderos, pero ninguna campaña de remarketing recoge después a esa gente: no hay público guardado de quienes vieron los Reels ni de quienes visitaron el perfil. La inversión termina ahí. Además, esa porción creció: era 12,2% del presupuesto el mes pasado, hoy es 16,3%.</p>
+          <div class="fdata">
+            <span>Reels Virales <b>$88.605</b></span><span>Seguidores <b>$54.322</b></span><span>Conversaciones atribuidas <b>0</b></span>
+          </div>
+        </div>
+
+        <div class="finding">
+          <div class="fhead"><span class="chip c-alto">Alto</span><span class="ftitle">Cinco campañas no se pueden reactivar como están</span></div>
+          <p>Ninguno de estos errores está frenando la entrega de hoy —todos caen sobre campañas o conjuntos pausados—, pero sí explican por qué esas líneas quedaron fuera de juego y por qué prenderlas de nuevo no va a funcionar sin tocarlas: la publicación que usaba <em>LEADS | CBO</em> fue borrada, cuatro anuncios de formularios tienen una llamada a la acción que Instagram no admite, dos anuncios de Visitas de Perfil están rechazados, uno más está rechazado dentro del conjunto lookalike viejo y tres campañas de mensajes piden el número de WhatsApp verificado como cuenta de empresa.</p>
+          <div class="fdata">
+            <span>Anuncios rechazados <b>3</b></span><span>CTA no admitida en IG <b>4</b></span><span>Creativo incompleto <b>1</b></span><span>WhatsApp sin verificar <b>3 campañas</b></span>
+          </div>
+        </div>
+
+        <div class="finding">
+          <div class="fhead"><span class="chip c-medio">Medio</span><span class="ftitle">Dentro del lookalike, la plata va al peor anuncio</span></div>
+          <p><em>HIFU Cristina</em> recibió $47.913 y trae conversaciones a $2.282; <em>Protocolo 360 | Wsp</em> gastó $11.313 para conseguir 3 conversaciones a $3.771. Mientras tanto <em>HIFU Susi</em>, el único que rinde a $965, apenas recibió $11.576. Con un público de mil personas el algoritmo no junta señal suficiente para repartir bien, así que el reparto queda al azar.</p>
+          <div class="fdata"><span>Mejor anuncio <b>$965</b></span><span>Peor anuncio <b>$3.771</b></span><span>Inversión al peor <b>4x la del mejor</b></span></div>
+        </div>
+
+        <div class="finding">
+          <div class="fhead"><span class="chip c-medio">Medio</span><span class="ftitle">Seis campañas marcadas por Meta como cuenta comprometida</span></div>
+          <p>Meta las pausó con el aviso de "usuarios comprometidos o restricciones de pago". Son campañas viejas sin inversión, así que no cuesta plata hoy, pero es una señal de salud de cuenta que conviene despejar antes de escalar el presupuesto: quién tiene acceso al Business Manager y qué medio de pago está cargado.</p>
+        </div>
+
+        <div class="finding">
+          <div class="fhead"><span class="chip c-medio">Medio</span><span class="ftitle">Más de 45 campañas y dos números de WhatsApp distintos</span></div>
+          <p>Casi todas las campañas están pausadas pero conservan presupuesto diario cargado, lo que las hace fáciles de reactivar por error. Y el historial está partido entre dos números: la línea que funciona usa el 1154865930 y la pausada el 1144040208. Cada número acumula su propio aprendizaje y sus propias conversaciones.</p>
+        </div>
+
+        <div class="finding">
+          <div class="fhead"><span class="chip c-ciego">Punto ciego</span><span class="ftitle">No sabemos cuánto cuesta un paciente, sólo cuánto cuesta un mensaje</span></div>
+          <p>Todo lo anterior mide conversaciones iniciadas. Ninguna de las 621 tiene atrás un dato de turno agendado ni de tratamiento vendido, así que no se puede saber si el lookalike traía menos conversaciones pero mejores, ni cuál de los tratamientos justifica su costo. Es la pieza que falta para que las decisiones dejen de ser sobre costo por mensaje y pasen a ser sobre costo por paciente.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Q3 ============ -->
+  <section class="q">
+    <div class="qmark">Q3<br>Qué hacer</div>
+    <div class="qbody">
+      <h2>Mismo presupuesto, entre 144 y 171 conversaciones más por mes</h2>
+      <p>Sin agregar un peso. La cuenta ya tiene una línea que consigue conversaciones a $821: se trata de dejar de financiar en paralelo una que cuesta $2.336.</p>
+
+      <div>
+        <div class="when"><h3 class="ui">Hoy</h3><hr><span class="mono">afecta el gasto de mañana</span></div>
+        <div class="acts">
+
+          <div class="act">
+            <div class="actbox"></div>
+            <div>
+              <h4>Pausar el conjunto <span class="mono">Lookalike | Wsp Ina</span></h4>
+              <p>Es el que corre contra las mil personas. Libera $10.000 diarios que hoy compran conversaciones a $1.875. Si se quiere conservar la línea, la única versión defendible es pausar <em>Protocolo 360 | Wsp</em> y <em>HIFU Cristina</em> y dejar sólo <em>HIFU Susi</em>, con presupuesto acorde al tamaño del público: $2.000 por día, no $10.000.</p>
+              <span class="impact">Libera $10.000/día · deja de comprar al doble del costo</span>
+            </div>
+          </div>
+
+          <div class="act">
+            <div class="actbox"></div>
+            <div>
+              <h4>Pasar ese presupuesto a <span class="mono">Mujeres | 35+ | Pilar | 1154865930</span>, por escalones</h4>
+              <p>No duplicar de golpe: cada salto grande reinicia el aprendizaje. Subir 30% cada tres o cuatro días hasta llegar a $18.000–$20.000 diarios, mirando dos números en cada escalón: el costo por conversación y la frecuencia. Hoy la frecuencia es 1,66, así que hay lugar; si pasa de 2,2 sin que baje el costo, frenar ahí y sostener.</p>
+              <span class="impact">Es el escalón que produce el resultado del mes</span>
+            </div>
+          </div>
+
+          <div class="act">
+            <div class="actbox"></div>
+            <div>
+              <h4>Activar ubicaciones Advantage+ en los tres conjuntos activos</h4>
+              <p>Hoy están con ubicaciones manuales. Meta estima 11,7% menos de costo por resultado, y en esta cuenta el CPM es el problema, así que abrir inventario juega a favor. Son dos clics y se puede revertir.</p>
+              <span class="impact">−11,7% de costo por resultado según la estimación de Meta</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div>
+        <div class="when"><h3 class="ui">Esta semana</h3><hr><span class="mono">antes de escalar más</span></div>
+        <div class="acts">
+
+          <div class="act">
+            <div class="actbox"></div>
+            <div>
+              <h4>Meter dos o tres creativos de relevo en la campaña de Pilar</h4>
+              <p>Escalar un conjunto que depende de un solo anuncio es lo que hace que el costo suba a las dos semanas. Hay dos candidatos con historial propio dentro de la misma cuenta: <em>Post IG Gluteos - Protocolo 360</em>, que trajo 122 conversaciones a $1.071 en la campaña hoy pausada, y <em>Post IG HIFU (resultados)</em>, que con muy poca inversión rindió a $621 y merece volumen. Y sumar video: la campaña de mensajes hoy es únicamente posteos de Instagram.</p>
+              <span class="impact">Sostiene el costo cuando suba el presupuesto</span>
+            </div>
+          </div>
+
+          <div class="act">
+            <div class="actbox"></div>
+            <div>
+              <h4>Reparar los errores antes de reactivar cualquier línea vieja</h4>
+              <p>Reemplazar la publicación borrada de <em>LEADS | CBO</em>, cambiar la llamada a la acción de los cuatro anuncios de formularios por una que Instagram admita, rehacer los tres anuncios rechazados —no se pueden reactivar, hay que crearlos de nuevo— y verificar el número de WhatsApp como cuenta de empresa en la página. Hecho eso, <em>LEADS | CBO</em> vuelve a ser la segunda mejor línea de la cuenta a $1.051.</p>
+              <span class="impact">Recupera una línea de $1.051 hoy apagada</span>
+            </div>
+          </div>
+
+          <div class="act">
+            <div class="actbox"></div>
+            <div>
+              <h4>Decidir qué hacer con los $142.927 de interacción y seguidores</h4>
+              <p>La recomendación es bajarlos a un tope del 10% del presupuesto y darles salida: crear el público de quienes interactuaron con el perfil y con los Reels en los últimos 365 días, y correr una campaña de mensajes sobre ese público. Hoy esa inversión compra atención y la tira. Si en cambio se decide que es presupuesto de marca, que sea una decisión explícita con un tope, no el resultado de dejar campañas prendidas.</p>
+              <span class="impact">Libera hasta $55.000/mes o los convierte en fuente de conversaciones</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div>
+        <div class="when"><h3 class="ui">Este mes</h3><hr><span class="mono">para dejar de decidir a ciegas</span></div>
+        <div class="acts">
+
+          <div class="act">
+            <div class="actbox"></div>
+            <div>
+              <h4>Cerrar el circuito de medición</h4>
+              <p>Enviar los eventos de compra desde WhatsApp hacia Meta —la propia recomendación de la cuenta estima 24% menos de costo por compra cuando el algoritmo puede optimizar hacia quien compra y no hacia quien escribe—. Mientras eso se implementa, alcanza con una planilla semanal: conversaciones, turnos agendados y tratamientos vendidos. Con eso se calcula el costo por paciente real y recién ahí se sabe si $821 por conversación es barato o caro.</p>
+              <span class="impact">−24% de costo por compra según la estimación de Meta</span>
+            </div>
+          </div>
+
+          <div class="act">
+            <div class="actbox"></div>
+            <div>
+              <h4>Limpiar la cuenta y unificar el número</h4>
+              <p>Archivar las campañas sin inversión en los últimos 90 días —son más de cuarenta, casi todas con presupuesto diario todavía cargado— y dejar un solo número de WhatsApp para todas las campañas de mensajes, así el historial y el aprendizaje dejan de estar partidos en dos.</p>
+              <span class="impact">Menos riesgo de reactivar algo por error</span>
+            </div>
+          </div>
+
+          <div class="act">
+            <div class="actbox"></div>
+            <div>
+              <h4>Despejar el aviso de cuenta comprometida</h4>
+              <p>Revisar en el Business Manager quién tiene acceso, activar la verificación en dos pasos y confirmar el medio de pago. Es prolijidad, pero conviene resolverlo antes de subir el presupuesto diario: una cuenta con ese aviso encima es una cuenta que puede frenarse justo cuando está escalando.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="closing">
+        <h3 class="ui">Una advertencia sobre la recomendación de Meta</h3>
+        <p>La puntuación de oportunidad de la cuenta (72/100) sugiere escalar dos conjuntos. Uno es el correcto: <em>Mujeres | 35+ | Pilar</em>. El otro es <em>Interaccion | Post IG</em>, el de interacción con la publicación. Meta lo señala porque tiene entrega estable y costo por resultado bajo, pero ese "resultado" son interacciones a $2,41, no conversaciones. Escalarlo aumentaría un número que no vende nada. Conviene tomar la primera mitad de esa recomendación e ignorar la segunda.</p>
+      </div>
+
+      <div class="closing">
+        <h3 class="ui">Cómo se calculó el impacto estimado</h3>
+        <p>Los $299.009 que hoy van al lookalike producen 128 conversaciones. Si esa misma plata rinde como la línea de Pilar pero asumiendo deterioro por escalar —entre $1.000 y $1.100 por conversación, contra los $821 actuales— produce entre 272 y 299. La diferencia es de 144 a 171 conversaciones por mes con el mismo presupuesto, y el costo mezclado de la cuenta baja de $1.181 a alrededor de $950. El supuesto que hay que vigilar es que el público de Pilar absorba el presupuesto extra sin encarecerse más de lo previsto; por eso la recomendación es escalar por escalones y no de una vez.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div>Datos leídos directamente de la API de Meta Ads el 26 de agosto de 2026 · cuenta 143662128609520 · ventana de 30 días cerrada al día de hoy, con el día en curso todavía parcial.</div>
+    <div>Las tres Q se leyeron como Qué pasó · Por qué pasó · Qué hacer. Si tu versión del método es otra, el contenido se reordena.</div>
+  </footer>
+
+</div>
