@@ -1,0 +1,8 @@
+# Avatar Reel Pack
+.env
+outputs/
+scratch/
+_research/
+tmp/
+__pycache__/
+*.pyc
