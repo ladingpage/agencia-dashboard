@@ -81,8 +81,8 @@
     "source_text_policy": "approved_script_or_corrected_transcript",
     "timing_policy": "word_timestamps_reconciled_to_final_copy",
     "sync": {
-      "preferred_transcriber": "npx hyperframes@latest transcribe --model small --language <LANG> --json",
-      "_transcriber_note": "Set <LANG> to your audio language (e.g. es, en, pt). Do NOT use Whisper .en models for non-English audio — they translate.",
+      "preferred_transcriber": "npx hyperframes@latest transcribe --model small --language es --json",
+      "_transcriber_note": "Language set to es (Spanish). Change --language if the reel audio is in another language (en, pt...). Do NOT use Whisper .en models for non-English audio — they translate.",
       "fallback_timing": "no_final_delivery_with_guessed_script_timing; use real word timestamps, forced alignment, or manually verified timing from actual audio",
       "proportional_timing_final_allowed": false,
       "require_real_audio_alignment_for_final": true,
